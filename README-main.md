@@ -23,8 +23,10 @@ This branch restructures the app into a clean client/admin separation with phone
 beauty-parlor-website/
 ├── index.html        # Client SPA — phone-gated, personalized
 ├── admin.html        # Manager portal — separate JWT-protected page
+├── config.js         # Frontend env config — API URL (git-ignored)
+├── config.example.js # Template for config.js — commit this, not config.js
 ├── docker-compose.yml
-├── .env              # Secrets (not committed)
+├── .env              # Backend secrets (not committed)
 └── backend/
     ├── main.py
     ├── database.py
@@ -74,6 +76,24 @@ python3 seed.py
 # 4. Start API server
 python3 -m uvicorn main:app --reload --port 8000
 ```
+
+### Configure Frontend API URL
+
+Copy the example config file — this sets where the frontend sends API requests:
+
+```bash
+cp config.example.js config.js
+```
+
+`config.js` defaults to `http://localhost:8000` for local dev. When deploying, update it to your production API URL:
+
+```js
+const ENV = {
+    API_BASE: 'https://your-app-name.onrender.com',
+};
+```
+
+> `config.js` is git-ignored (like `.env`) — each environment has its own copy.
 
 Open pages:
 ```bash
@@ -136,12 +156,13 @@ python3 -m http.server 3000
 ## Testing
 
 ### Client Flow
-1. Open `index.html` — phone gate appears on load.
-2. Enter `+1 555-0192` → greeted as **Sophia Loren** (existing user).
-3. Enter a new number → prompted to provide your name (new account created).
-4. Use **Book Now** wizard — 3 steps: service → stylist/time → confirm.
-5. **My Bookings** shows only your own appointments.
-6. **Logout** clears session and returns to phone gate.
+1. Open `index.html` — homepage loads freely (no gate).
+2. Click **Book Now** or **My Bookings** — phone gate appears.
+3. Enter `+1 555-0192` → identified as **Sophia Loren** (existing user).
+4. Enter a new number → prompted to provide your name (new account created).
+5. Use **Book Now** wizard — 3 steps: service → stylist/time → confirm.
+6. **My Bookings** shows only your own appointments.
+7. **Logout** clears session; gate reappears on next protected action.
 
 ### Admin Flow
 1. Open `admin.html` → login screen.
