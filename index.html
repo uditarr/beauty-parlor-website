@@ -315,7 +315,9 @@
 </footer>
 
 <script>
-const API_BASE = 'http://localhost:8000';
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:8000'
+    : 'https://your-app-name.onrender.com';  // TODO: replace with your Render URL after deploying
 
 const stylistsData = [
     { id: 'stylist-1', name: 'Victoria Vance',    title: 'Master Hair Specialist', rating: '4.9 ⭐', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80' },
