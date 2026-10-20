@@ -36,12 +36,12 @@
 <body class="bg-charcoal text-champagne min-h-screen flex flex-col justify-between selection:bg-roseGold-500 selection:text-white">
 
 <!-- PHONE GATE MODAL -->
-<div id="phone-gate" class="fixed inset-0 z-50 bg-charcoal/95 backdrop-blur-md flex items-center justify-center p-4">
+<div id="phone-gate" class="fixed inset-0 z-50 bg-charcoal/95 backdrop-blur-md items-center justify-center p-4 hidden">
     <div class="glass-card rounded-3xl p-8 max-w-md w-full border border-roseGold-500/30 space-y-6">
         <div class="text-center">
             <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-roseGold-600 to-accentGold flex items-center justify-center text-white font-serif font-bold text-3xl shadow-lg mx-auto mb-4">G</div>
             <h2 class="font-serif text-2xl font-bold text-white">Welcome to Glow & Grace</h2>
-            <p class="text-xs text-roseGold-200/60 mt-1">Enter your phone number to continue</p>
+            <p class="text-xs text-roseGold-200/60 mt-1">Enter your phone number to book or view your appointments</p>
         </div>
 
         <!-- Step A: Phone input -->
@@ -100,7 +100,7 @@
             <a href="#services" class="hover:text-roseGold-300 transition-colors">Services</a>
             <a href="#booking" class="hover:text-roseGold-300 transition-colors">Book Now</a>
             <a href="#gallery" class="hover:text-roseGold-300 transition-colors">Gallery</a>
-            <a href="#my-bookings" class="hover:text-roseGold-300 transition-colors">My Bookings</a>
+            <a href="#" onclick="requireUser(()=>{window.location.hash='#my-bookings'});return false;" class="hover:text-roseGold-300 transition-colors">My Bookings</a>
         </nav>
         <!-- User greeting chip -->
         <div id="user-chip" class="hidden items-center gap-2 glass-card px-4 py-2 rounded-xl border border-roseGold-500/30">
@@ -131,7 +131,7 @@
                 Indulge in tailored facial treatments, precision hair design, artistic nail care, and bespoke bridal transformations crafted by master stylists.
             </p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="#booking" class="px-8 py-4 rounded-full bg-gradient-to-r from-roseGold-500 to-roseGold-700 text-white font-semibold text-sm tracking-wider uppercase shadow-lg shadow-roseGold-600/30 hover:scale-105 transition-all">
+                <a href="#booking" onclick="requireUser(()=>{});return true;" class="px-8 py-4 rounded-full bg-gradient-to-r from-roseGold-500 to-roseGold-700 text-white font-semibold text-sm tracking-wider uppercase shadow-lg shadow-roseGold-600/30 hover:scale-105 transition-all">
                     <i class="fa-regular fa-calendar-check mr-2"></i> Book Appointment Now
                 </a>
                 <a href="#services" class="px-8 py-4 rounded-full glass-card hover:bg-roseGold-500/10 border border-roseGold-300/30 text-roseGold-200 font-semibold text-sm tracking-wider uppercase transition-all">
@@ -346,13 +346,34 @@ window.onload = async function () {
     const saved = sessionStorage.getItem('glowUser');
     if (saved) {
         currentUser = JSON.parse(saved);
-        onUserIdentified();
+        onUserIdentified(true); // silent — no toast on page load
     }
     await fetchServices();
     await fetchReviews();
     document.getElementById('booking-date').value = new Date().toISOString().split('T')[0];
     renderTimeSlots();
 };
+
+// Show phone gate and remember what to do after login
+let pendingAction = null;
+function requireUser(action) {
+    if (currentUser) { action(); return; }
+    pendingAction = action;
+    showPhoneGate();
+}
+
+function showPhoneGate() {
+    showPhoneStep();
+    const gate = document.getElementById('phone-gate');
+    gate.classList.remove('hidden');
+    gate.classList.add('flex');
+}
+
+function hidePhoneGate() {
+    const gate = document.getElementById('phone-gate');
+    gate.classList.add('hidden');
+    gate.classList.remove('flex');
+}
 
 // ── PHONE GATE ───────────────────────────────────────────────────
 function showPhoneStep() {
@@ -403,9 +424,9 @@ async function handleNewUserSubmit() {
     }
 }
 
-function onUserIdentified() {
+function onUserIdentified(silent = false) {
     // Hide gate
-    document.getElementById('phone-gate').classList.add('hidden');
+    hidePhoneGate();
 
     // Show user chip in header
     document.getElementById('user-chip').classList.remove('hidden');
@@ -418,19 +439,21 @@ function onUserIdentified() {
 
     // Load their bookings
     fetchMyBookings();
-    showToast(`Welcome back, ${currentUser.name.split(' ')[0]}! 💄`, 'success');
+    if (!silent) showToast(`Welcome back, ${currentUser.name.split(' ')[0]}! 💄`, 'success');
+
+    // Run any deferred action (e.g. scroll to booking)
+    if (pendingAction) { pendingAction(); pendingAction = null; }
 }
 
 function logoutUser() {
     sessionStorage.removeItem('glowUser');
     currentUser = null;
-    document.getElementById('phone-gate').classList.remove('hidden');
     document.getElementById('user-chip').classList.add('hidden');
     document.getElementById('user-chip').classList.remove('flex');
     document.getElementById('gate-phone').value = '';
     document.getElementById('gate-name').value = '';
     document.getElementById('gate-email').value = '';
-    showPhoneStep();
+    showPhoneGate();
     document.getElementById('hero-heading').innerHTML =
         `Unveil Your Inner <span class="gold-gradient-text italic">Radiance & Elegance</span>`;
     document.getElementById('my-bookings-list').innerHTML =
@@ -482,14 +505,27 @@ function renderServicesGrid(list) {
 }
 
 function quickBookService(serviceId) {
-    currentBookingState.serviceId = serviceId;
-    renderBookingOptions();
-    window.location.hash = '#booking';
+    requireUser(() => {
+        currentBookingState.serviceId = serviceId;
+        renderBookingOptions();
+        window.location.hash = '#booking';
+    });
 }
 
 // ── BOOKING WIZARD ───────────────────────────────────────────────
 function nextBookingStep(stepNum) {
     if (stepNum === 2 && !currentBookingState.serviceId) { showToast('Please select a service first', 'error'); return; }
+    if (stepNum === 2) {
+        requireUser(() => {
+            document.querySelectorAll('.booking-step').forEach(el => el.classList.add('hidden'));
+            document.getElementById('booking-step-2').classList.remove('hidden');
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`step-indicator-${i}`).className =
+                    `h-1.5 rounded-full transition-all ${i <= 2 ? 'bg-roseGold-500' : 'bg-charcoalLight'}`;
+            }
+        });
+        return;
+    }
     if (stepNum === 3) {
         if (!currentBookingState.stylistId) { showToast('Please select a stylist', 'error'); return; }
         if (!currentBookingState.date || !currentBookingState.timeSlot) { showToast('Please select date and time slot', 'error'); return; }
