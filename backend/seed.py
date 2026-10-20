@@ -1,6 +1,6 @@
 import asyncio
 from database import engine, AsyncSessionLocal, Base
-from models import Booking, Service, Review, BookingStatus, ServiceCategory
+from models import Booking, Service, Review, BookingStatus, ServiceCategory, User
 
 
 SERVICES_SEED = [
@@ -60,56 +60,15 @@ SERVICES_SEED = [
     },
 ]
 
-BOOKINGS_SEED = [
-    {
-        "ref_id": "GLOW-1001",
-        "client_name": "Sophia Loren",
-        "client_email": "sophia@example.com",
-        "client_phone": "+1 555-0192",
-        "service_title": "Balayage & Couture Cut",
-        "price": 180,
-        "stylist_name": "Victoria Vance",
-        "date": "2026-10-22",
-        "time_slot": "10:00 AM",
-        "status": BookingStatus.confirmed,
-    },
-    {
-        "ref_id": "GLOW-1002",
-        "client_name": "Olivia Wilde",
-        "client_email": "olivia@example.com",
-        "client_phone": "+1 555-0193",
-        "service_title": "Hydra-Glow Diamond Facial",
-        "price": 145,
-        "stylist_name": "Camila Rodriguez",
-        "date": "2026-10-22",
-        "time_slot": "01:00 PM",
-        "status": BookingStatus.pending,
-    },
-    {
-        "ref_id": "GLOW-1003",
-        "client_name": "Emma Watson",
-        "client_email": "emma@example.com",
-        "client_phone": "+1 555-0194",
-        "service_title": "Royal Bridal Makeover Suite",
-        "price": 350,
-        "stylist_name": "Aiden Dupont",
-        "date": "2026-10-23",
-        "time_slot": "03:00 PM",
-        "status": BookingStatus.confirmed,
-    },
+USERS_SEED = [
+    {"phone": "+1 555-0192", "name": "Sophia Loren", "email": "sophia@example.com"},
+    {"phone": "+1 555-0193", "name": "Olivia Wilde", "email": "olivia@example.com"},
+    {"phone": "+1 555-0194", "name": "Emma Watson", "email": "emma@example.com"},
 ]
 
 REVIEWS_SEED = [
-    {
-        "name": "Isabella M.",
-        "rating": 5,
-        "comment": "Victoria did an incredible job with my balayage! The lounge ambiance is top tier.",
-    },
-    {
-        "name": "Chloe K.",
-        "rating": 5,
-        "comment": "The Hydra-Glow facial made my skin radiate for days. Definitely coming back!",
-    },
+    {"name": "Isabella M.", "rating": 5, "comment": "Victoria did an incredible job with my balayage! The lounge ambiance is top tier."},
+    {"name": "Chloe K.", "rating": 5, "comment": "The Hydra-Glow facial made my skin radiate for days. Definitely coming back!"},
 ]
 
 
@@ -120,28 +79,82 @@ async def seed():
     async with AsyncSessionLocal() as session:
         from sqlalchemy import select
 
-        # Seed services if empty
+        # Seed services
         result = await session.execute(select(Service))
         if not result.scalars().first():
             for s in SERVICES_SEED:
                 session.add(Service(**s))
+            await session.commit()
             print(f"  Seeded {len(SERVICES_SEED)} services.")
 
-        # Seed bookings if empty
+        # Seed users
+        result = await session.execute(select(User))
+        if not result.scalars().first():
+            for u in USERS_SEED:
+                session.add(User(**u))
+            await session.commit()
+            print(f"  Seeded {len(USERS_SEED)} users.")
+
+        # Seed bookings linked to users
         result = await session.execute(select(Booking))
         if not result.scalars().first():
-            for b in BOOKINGS_SEED:
-                session.add(Booking(**b))
-            print(f"  Seeded {len(BOOKINGS_SEED)} bookings.")
+            users_result = await session.execute(select(User))
+            users = {u.phone: u for u in users_result.scalars().all()}
 
-        # Seed reviews if empty
+            bookings_seed = [
+                {
+                    "ref_id": "GLOW-1001",
+                    "user_id": users["+1 555-0192"].id,
+                    "client_name": "Sophia Loren",
+                    "client_email": "sophia@example.com",
+                    "client_phone": "+1 555-0192",
+                    "service_title": "Balayage & Couture Cut",
+                    "price": 180,
+                    "stylist_name": "Victoria Vance",
+                    "date": "2026-10-22",
+                    "time_slot": "10:00 AM",
+                    "status": BookingStatus.confirmed,
+                },
+                {
+                    "ref_id": "GLOW-1002",
+                    "user_id": users["+1 555-0193"].id,
+                    "client_name": "Olivia Wilde",
+                    "client_email": "olivia@example.com",
+                    "client_phone": "+1 555-0193",
+                    "service_title": "Hydra-Glow Diamond Facial",
+                    "price": 145,
+                    "stylist_name": "Camila Rodriguez",
+                    "date": "2026-10-22",
+                    "time_slot": "01:00 PM",
+                    "status": BookingStatus.pending,
+                },
+                {
+                    "ref_id": "GLOW-1003",
+                    "user_id": users["+1 555-0194"].id,
+                    "client_name": "Emma Watson",
+                    "client_email": "emma@example.com",
+                    "client_phone": "+1 555-0194",
+                    "service_title": "Royal Bridal Makeover Suite",
+                    "price": 350,
+                    "stylist_name": "Aiden Dupont",
+                    "date": "2026-10-23",
+                    "time_slot": "03:00 PM",
+                    "status": BookingStatus.confirmed,
+                },
+            ]
+            for b in bookings_seed:
+                session.add(Booking(**b))
+            await session.commit()
+            print(f"  Seeded {len(bookings_seed)} bookings.")
+
+        # Seed reviews
         result = await session.execute(select(Review))
         if not result.scalars().first():
             for r in REVIEWS_SEED:
                 session.add(Review(**r))
+            await session.commit()
             print(f"  Seeded {len(REVIEWS_SEED)} reviews.")
 
-        await session.commit()
         print("Seed complete.")
 
 

@@ -7,6 +7,7 @@ from sqlalchemy import select
 from database import get_db
 from models import Service
 from schemas import ServiceCreate, ServiceOut
+from auth import verify_admin_token
 
 router = APIRouter(prefix="/api/services", tags=["Services"])
 
@@ -17,7 +18,7 @@ async def get_services(db: AsyncSession = Depends(get_db)):
     return result.scalars().all()
 
 
-@router.post("/", response_model=ServiceOut, status_code=201)
+@router.post("/", response_model=ServiceOut, status_code=201, dependencies=[Depends(verify_admin_token)])
 async def create_service(payload: ServiceCreate, db: AsyncSession = Depends(get_db)):
     service = Service(id=f"srv-{uuid.uuid4().hex[:8]}", **payload.model_dump())
     db.add(service)
@@ -26,7 +27,7 @@ async def create_service(payload: ServiceCreate, db: AsyncSession = Depends(get_
     return service
 
 
-@router.delete("/{service_id}")
+@router.delete("/{service_id}", dependencies=[Depends(verify_admin_token)])
 async def delete_service(service_id: str, db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Service).where(Service.id == service_id))
     service = result.scalar_one_or_none()

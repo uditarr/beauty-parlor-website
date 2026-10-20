@@ -4,1489 +4,694 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Glow & Grace | Luxury Beauty Lounge & Salon</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        roseGold: {
-                            50: '#fff7f8',
-                            100: '#ffedf0',
-                            200: '#ffd0d8',
-                            300: '#fba5b4',
-                            400: '#f66e86',
-                            500: '#e83e5f',
-                            600: '#d12447',
-                            700: '#b01937',
-                            800: '#921832',
-                            900: '#7b192e',
-                        },
-                        charcoal: '#181617',
-                        charcoalLight: '#242123',
-                        champagne: '#f7ede2',
-                        accentGold: '#d4af37'
+                        roseGold: { 50:'#fff7f8',100:'#ffedf0',200:'#ffd0d8',300:'#fba5b4',400:'#f66e86',500:'#e83e5f',600:'#d12447',700:'#b01937',800:'#921832',900:'#7b192e' },
+                        charcoal: '#181617', charcoalLight: '#242123', champagne: '#f7ede2', accentGold: '#d4af37'
                     },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif']
-                    }
+                    fontFamily: { sans: ['Inter','sans-serif'], serif: ['Playfair Display','serif'] }
                 }
             }
         }
     </script>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #181617;
-            color: #f7ede2;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #181617; color: #f7ede2; }
         .font-serif { font-family: 'Playfair Display', serif; }
-        .glass-card {
-            background: rgba(36, 33, 35, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(228, 170, 180, 0.15);
-        }
-        .glass-card-hover:hover {
-            border-color: rgba(246, 110, 134, 0.4);
-            box-shadow: 0 10px 30px -10px rgba(246, 110, 134, 0.2);
-        }
-        .gold-gradient-text {
-            background: linear-gradient(135deg, #fba5b4 0%, #e83e5f 50%, #d4af37 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #181617; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #f66e86; border-radius: 3px; }
+        .glass-card { background: rgba(36,33,35,0.7); backdrop-filter: blur(12px); border: 1px solid rgba(228,170,180,0.15); }
+        .glass-card-hover:hover { border-color: rgba(246,110,134,0.4); box-shadow: 0 10px 30px -10px rgba(246,110,134,0.2); }
+        .gold-gradient-text { background: linear-gradient(135deg,#fba5b4 0%,#e83e5f 50%,#d4af37 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .custom-scrollbar::-webkit-scrollbar { width:6px; height:6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background:#181617; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background:#f66e86; border-radius:3px; }
     </style>
 </head>
 <body class="bg-charcoal text-champagne min-h-screen flex flex-col justify-between selection:bg-roseGold-500 selection:text-white">
 
-    <!-- TOP NAVIGATION BAR -->
-    <header class="sticky top-0 z-50 glass-card border-b border-roseGold-500/20 px-4 lg:px-8 py-3.5 transition-all">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="#" onclick="switchMainTab('client')" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-roseGold-600 to-accentGold flex items-center justify-center text-white font-serif font-bold text-xl shadow-lg shadow-roseGold-500/20 group-hover:scale-105 transition-transform">G</div>
-                <div>
-                    <span class="font-serif text-xl md:text-2xl font-bold tracking-wide gold-gradient-text">GLOW & GRACE</span>
-                    <span class="block text-[10px] uppercase tracking-widest text-roseGold-300 -mt-1 font-sans">Beauty Lounge & Spa</span>
-                </div>
-            </a>
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
-                <a href="#hero" onclick="switchMainTab('client')" class="hover:text-roseGold-300 transition-colors">Home</a>
-                <a href="#services" onclick="switchMainTab('client')" class="hover:text-roseGold-300 transition-colors">Services</a>
-                <a href="#booking" onclick="switchMainTab('client')" class="hover:text-roseGold-300 transition-colors">Book Now</a>
-                <a href="#gallery" onclick="switchMainTab('client')" class="hover:text-roseGold-300 transition-colors">Gallery</a>
-                <a href="#my-appointments" onclick="switchMainTab('client')" class="hover:text-roseGold-300 transition-colors">My Booking</a>
+<!-- PHONE GATE MODAL -->
+<div id="phone-gate" class="fixed inset-0 z-50 bg-charcoal/95 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="glass-card rounded-3xl p-8 max-w-md w-full border border-roseGold-500/30 space-y-6">
+        <div class="text-center">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-roseGold-600 to-accentGold flex items-center justify-center text-white font-serif font-bold text-3xl shadow-lg mx-auto mb-4">G</div>
+            <h2 class="font-serif text-2xl font-bold text-white">Welcome to Glow & Grace</h2>
+            <p class="text-xs text-roseGold-200/60 mt-1">Enter your phone number to continue</p>
+        </div>
+
+        <!-- Step A: Phone input -->
+        <div id="gate-step-phone" class="space-y-4">
+            <div>
+                <label class="block text-xs font-medium text-roseGold-200 mb-1.5">Phone Number</label>
+                <input type="tel" id="gate-phone" placeholder="+1 (555) 019-2834"
+                    class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-roseGold-400 placeholder-roseGold-200/30">
             </div>
-            <div class="flex items-center gap-2 bg-charcoal/80 p-1 rounded-xl border border-roseGold-500/30">
-                <button id="btn-tab-client" onclick="switchMainTab('client')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-roseGold-600 text-white shadow-md">
-                    <i class="fa-solid font-normal fa-user-sparkles mr-1.5"></i>Client View
+            <button onclick="handlePhoneSubmit()" class="w-full py-3 rounded-xl bg-gradient-to-r from-roseGold-500 to-roseGold-700 text-white font-semibold text-sm tracking-wider uppercase shadow-lg hover:scale-[1.01] transition-all">
+                Continue <i class="fa-solid fa-arrow-right ml-1"></i>
+            </button>
+        </div>
+
+        <!-- Step B: New user — ask name + email -->
+        <div id="gate-step-newuser" class="space-y-4 hidden">
+            <div class="text-center text-xs text-roseGold-300 bg-roseGold-500/10 rounded-xl p-3 border border-roseGold-500/20">
+                <i class="fa-solid fa-sparkles mr-1"></i> First time here! Tell us your name to get started.
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-roseGold-200 mb-1.5">Full Name *</label>
+                <input type="text" id="gate-name" placeholder="e.g. Sophia Loren"
+                    class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-roseGold-400">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-roseGold-200 mb-1.5">Email Address (optional)</label>
+                <input type="email" id="gate-email" placeholder="sophia@example.com"
+                    class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-roseGold-400">
+            </div>
+            <div class="flex gap-2">
+                <button onclick="showPhoneStep()" class="px-4 py-3 rounded-xl glass-card text-roseGold-200 text-xs">
+                    <i class="fa-solid fa-arrow-left"></i> Back
                 </button>
-                <button id="btn-tab-admin" onclick="switchMainTab('admin')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-roseGold-200 hover:text-white transition-all">
-                    <i class="fa-solid fa-user-shield mr-1.5"></i>Manager Dashboard
-                </button>
-                <button id="btn-tab-backend" onclick="switchMainTab('backend')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-roseGold-200 hover:text-white transition-all bg-charcoalLight/50">
-                    <i class="fa-solid fa-code mr-1.5"></i>Backend Code & API
+                <button onclick="handleNewUserSubmit()" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-roseGold-500 to-roseGold-700 text-white font-semibold text-sm uppercase shadow-lg hover:scale-[1.01] transition-all">
+                    Create My Account <i class="fa-solid fa-check ml-1"></i>
                 </button>
             </div>
         </div>
-    </header>
+    </div>
+</div>
 
-    <!-- NOTIFICATION TOAST -->
-    <div id="toast-container" class="fixed top-20 right-5 z-50 flex flex-col gap-2 max-w-sm"></div>
+<!-- TOAST -->
+<div id="toast-container" class="fixed top-20 right-5 z-50 flex flex-col gap-2 max-w-sm"></div>
 
-    <!-- MAIN CONTAINER -->
-    <main class="flex-grow">
+<!-- HEADER -->
+<header class="sticky top-0 z-40 glass-card border-b border-roseGold-500/20 px-4 lg:px-8 py-3.5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <a href="#hero" class="flex items-center gap-3 group">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-roseGold-600 to-accentGold flex items-center justify-center text-white font-serif font-bold text-xl shadow-lg group-hover:scale-105 transition-transform">G</div>
+            <div>
+                <span class="font-serif text-xl md:text-2xl font-bold tracking-wide gold-gradient-text">GLOW & GRACE</span>
+                <span class="block text-[10px] uppercase tracking-widest text-roseGold-300 -mt-1">Beauty Lounge & Spa</span>
+            </div>
+        </a>
+        <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+            <a href="#services" class="hover:text-roseGold-300 transition-colors">Services</a>
+            <a href="#booking" class="hover:text-roseGold-300 transition-colors">Book Now</a>
+            <a href="#gallery" class="hover:text-roseGold-300 transition-colors">Gallery</a>
+            <a href="#my-bookings" class="hover:text-roseGold-300 transition-colors">My Bookings</a>
+        </nav>
+        <!-- User greeting chip -->
+        <div id="user-chip" class="hidden items-center gap-2 glass-card px-4 py-2 rounded-xl border border-roseGold-500/30">
+            <i class="fa-solid fa-circle-user text-roseGold-400"></i>
+            <span id="user-chip-name" class="text-xs font-semibold text-white"></span>
+            <button onclick="logoutUser()" class="text-roseGold-200/50 hover:text-roseGold-300 text-xs ml-1" title="Switch user">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+        </div>
+    </div>
+</header>
 
-        <!-- ========================================== -->
-        <!-- VIEW 1: FRONTEND CLIENT EXPERIENCE         -->
-        <!-- ========================================== -->
-        <div id="view-client" class="space-y-20 pb-20">
+<main class="flex-grow">
 
-            <!-- Hero Section -->
-            <section id="hero" class="relative min-h-[85vh] flex items-center justify-center overflow-hidden px-4">
-                <div class="absolute -top-32 -left-32 w-96 h-96 bg-roseGold-600/20 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-accentGold/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-roseGold-900/20 via-charcoal to-charcoal pointer-events-none"></div>
-                <div class="max-w-5xl mx-auto text-center relative z-10 pt-10">
-                    <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-roseGold-500/10 border border-roseGold-500/30 text-roseGold-300 text-xs font-semibold tracking-widest uppercase mb-6 backdrop-blur-md">
-                        <i class="fa-solid fa-sparkles text-accentGold"></i> Premium Salon & Luxury Spa Experience
-                    </span>
-                    <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold leading-tight mb-6">
-                        Unveil Your Inner <span class="gold-gradient-text italic">Radiance & Elegance</span>
-                    </h1>
-                    <p class="max-w-2xl mx-auto text-roseGold-100/70 text-base md:text-lg mb-8 font-light leading-relaxed">
-                        Indulge in tailored facial treatments, precision hair design, artistic nail care, and bespoke bridal transformations crafted by industry-leading master stylists.
-                    </p>
-                    <div class="flex flex-wrap justify-center gap-4">
-                        <a href="#booking" class="px-8 py-4 rounded-full bg-gradient-to-r from-roseGold-500 to-roseGold-700 text-white font-semibold text-sm tracking-wider uppercase shadow-lg shadow-roseGold-600/30 hover:shadow-roseGold-600/50 hover:scale-105 transition-all">
-                            <i class="fa-regular fa-calendar-check mr-2"></i> Book Appointment Now
-                        </a>
-                        <a href="#services" class="px-8 py-4 rounded-full glass-card hover:bg-roseGold-500/10 border border-roseGold-300/30 text-roseGold-200 font-semibold text-sm tracking-wider uppercase transition-all">
-                            Explore Services
-                        </a>
-                    </div>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-4xl mx-auto">
-                        <div class="glass-card p-4 rounded-2xl text-center">
-                            <i class="fa-solid fa-award text-accentGold text-2xl mb-1"></i>
-                            <div class="text-xl font-bold text-white">4.9 / 5.0</div>
-                            <div class="text-xs text-roseGold-200/60">Over 2,400+ Reviews</div>
-                        </div>
-                        <div class="glass-card p-4 rounded-2xl text-center">
-                            <i class="fa-solid fa-user-scissors text-roseGold-400 text-2xl mb-1"></i>
-                            <div class="text-xl font-bold text-white">12+</div>
-                            <div class="text-xs text-roseGold-200/60">Certified Master Stylists</div>
-                        </div>
-                        <div class="glass-card p-4 rounded-2xl text-center">
-                            <i class="fa-solid fa-leaf text-emerald-400 text-2xl mb-1"></i>
-                            <div class="text-xl font-bold text-white">100%</div>
-                            <div class="text-xs text-roseGold-200/60">Organic & Vegan Products</div>
-                        </div>
-                        <div class="glass-card p-4 rounded-2xl text-center">
-                            <i class="fa-solid fa-gem text-roseGold-300 text-2xl mb-1"></i>
-                            <div class="text-xl font-bold text-white">VIP Lounge</div>
-                            <div class="text-xs text-roseGold-200/60">Private Suites Available</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+    <!-- HERO -->
+    <section id="hero" class="relative min-h-[85vh] flex items-center justify-center overflow-hidden px-4">
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-roseGold-600/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-accentGold/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-roseGold-900/20 via-charcoal to-charcoal pointer-events-none"></div>
+        <div class="max-w-5xl mx-auto text-center relative z-10 pt-10">
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-roseGold-500/10 border border-roseGold-500/30 text-roseGold-300 text-xs font-semibold tracking-widest uppercase mb-6 backdrop-blur-md">
+                <i class="fa-solid fa-sparkles text-accentGold"></i> Premium Salon & Luxury Spa Experience
+            </span>
+            <h1 id="hero-heading" class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold leading-tight mb-6">
+                Unveil Your Inner <span class="gold-gradient-text italic">Radiance & Elegance</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-roseGold-100/70 text-base md:text-lg mb-8 font-light leading-relaxed">
+                Indulge in tailored facial treatments, precision hair design, artistic nail care, and bespoke bridal transformations crafted by master stylists.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#booking" class="px-8 py-4 rounded-full bg-gradient-to-r from-roseGold-500 to-roseGold-700 text-white font-semibold text-sm tracking-wider uppercase shadow-lg shadow-roseGold-600/30 hover:scale-105 transition-all">
+                    <i class="fa-regular fa-calendar-check mr-2"></i> Book Appointment Now
+                </a>
+                <a href="#services" class="px-8 py-4 rounded-full glass-card hover:bg-roseGold-500/10 border border-roseGold-300/30 text-roseGold-200 font-semibold text-sm tracking-wider uppercase transition-all">
+                    Explore Services
+                </a>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-4xl mx-auto">
+                <div class="glass-card p-4 rounded-2xl text-center"><i class="fa-solid fa-award text-accentGold text-2xl mb-1"></i><div class="text-xl font-bold text-white">4.9 / 5.0</div><div class="text-xs text-roseGold-200/60">Over 2,400+ Reviews</div></div>
+                <div class="glass-card p-4 rounded-2xl text-center"><i class="fa-solid fa-user-scissors text-roseGold-400 text-2xl mb-1"></i><div class="text-xl font-bold text-white">12+</div><div class="text-xs text-roseGold-200/60">Certified Master Stylists</div></div>
+                <div class="glass-card p-4 rounded-2xl text-center"><i class="fa-solid fa-leaf text-emerald-400 text-2xl mb-1"></i><div class="text-xl font-bold text-white">100%</div><div class="text-xs text-roseGold-200/60">Organic & Vegan Products</div></div>
+                <div class="glass-card p-4 rounded-2xl text-center"><i class="fa-solid fa-gem text-roseGold-300 text-2xl mb-1"></i><div class="text-xl font-bold text-white">VIP Lounge</div><div class="text-xs text-roseGold-200/60">Private Suites Available</div></div>
+            </div>
+        </div>
+    </section>
 
-            <!-- Services Menu Section -->
-            <section id="services" class="max-w-7xl mx-auto px-4 sm:px-6">
-                <div class="text-center max-w-2xl mx-auto mb-12">
-                    <span class="text-roseGold-400 text-xs font-bold uppercase tracking-widest">Bespoke Treatments</span>
-                    <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-1">Our Service Collection</h2>
-                    <div class="w-16 h-0.5 bg-roseGold-500 mx-auto mt-3"></div>
-                </div>
-                <div class="flex flex-wrap justify-center gap-2 mb-10" id="service-category-tabs">
-                    <button onclick="filterServices('all')" class="service-tab-btn active px-5 py-2.5 rounded-full text-xs font-semibold bg-roseGold-600 text-white transition-all">All Treatments</button>
-                    <button onclick="filterServices('hair')" class="service-tab-btn px-5 py-2.5 rounded-full text-xs font-semibold glass-card text-roseGold-200 hover:text-white transition-all">Hair Care & Styling</button>
-                    <button onclick="filterServices('skin')" class="service-tab-btn px-5 py-2.5 rounded-full text-xs font-semibold glass-card text-roseGold-200 hover:text-white transition-all">Skin & Facials</button>
-                    <button onclick="filterServices('nails')" class="service-tab-btn px-5 py-2.5 rounded-full text-xs font-semibold glass-card text-roseGold-200 hover:text-white transition-all">Nails & Spa</button>
-                    <button onclick="filterServices('bridal')" class="service-tab-btn px-5 py-2.5 rounded-full text-xs font-semibold glass-card text-roseGold-200 hover:text-white transition-all">Bridal & Glam</button>
-                </div>
-                <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Populated by fetchServices() -->
-                </div>
-            </section>
+    <!-- SERVICES -->
+    <section id="services" class="max-w-7xl mx-auto px-4 sm:px-6 space-y-20 pb-4">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-roseGold-400 text-xs font-bold uppercase tracking-widest">Bespoke Treatments</span>
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-1">Our Service Collection</h2>
+            <div class="w-16 h-0.5 bg-roseGold-500 mx-auto mt-3"></div>
+        </div>
+        <div class="flex flex-wrap justify-center gap-2 mb-10">
+            <button onclick="filterServices('all', this)" class="service-tab-btn px-5 py-2.5 rounded-full text-xs font-semibold bg-roseGold-600 text-white transition-all">All Treatments</button>
+            <button onclick="filterServices('hair', this)" class="service-tab-btn px-5 py-2.5 rounded-full text-xs font-semibold glass-card text-roseGold-200 hover:text-white transition-all">Hair Care</button>
+            <button onclick="filterServices('skin', this)" class="service-tab-btn px-5 py-2.5 rounded-full text-xs font-semibold glass-card text-roseGold-200 hover:text-white transition-all">Skin & Facials</button>
+            <button onclick="filterServices('nails', this)" class="service-tab-btn px-5 py-2.5 rounded-full text-xs font-semibold glass-card text-roseGold-200 hover:text-white transition-all">Nails & Spa</button>
+            <button onclick="filterServices('bridal', this)" class="service-tab-btn px-5 py-2.5 rounded-full text-xs font-semibold glass-card text-roseGold-200 hover:text-white transition-all">Bridal & Glam</button>
+        </div>
+        <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
 
-            <!-- Interactive Booking Section -->
-            <section id="booking" class="max-w-5xl mx-auto px-4 sm:px-6 scroll-mt-24">
-                <div class="glass-card rounded-3xl p-6 sm:p-10 border border-roseGold-500/30 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-roseGold-500/10 rounded-full blur-2xl pointer-events-none"></div>
-                    <div class="text-center mb-8">
-                        <span class="text-roseGold-400 text-xs font-bold uppercase tracking-widest">Seamless Reservation</span>
-                        <h2 class="font-serif text-3xl font-bold mt-1">Book Your Experience</h2>
-                        <p class="text-xs text-roseGold-200/60 mt-1">Select your desired service, master stylist, and preferred timing.</p>
-                    </div>
-                    <div class="grid grid-cols-4 gap-2 mb-8">
-                        <div id="step-indicator-1" class="h-1.5 rounded-full bg-roseGold-500 transition-all"></div>
-                        <div id="step-indicator-2" class="h-1.5 rounded-full bg-charcoalLight transition-all"></div>
-                        <div id="step-indicator-3" class="h-1.5 rounded-full bg-charcoalLight transition-all"></div>
-                        <div id="step-indicator-4" class="h-1.5 rounded-full bg-charcoalLight transition-all"></div>
-                    </div>
-
-                    <form id="booking-form" onsubmit="handleBookingSubmit(event)">
-                        <!-- STEP 1: Select Service -->
-                        <div id="booking-step-1" class="booking-step space-y-4">
-                            <h3 class="text-sm font-semibold uppercase tracking-wider text-roseGold-300 flex items-center gap-2">
-                                <span class="w-6 h-6 rounded-full bg-roseGold-500/20 text-roseGold-300 text-xs flex items-center justify-center">1</span> Select Service
-                            </h3>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="booking-service-options"></div>
-                            <div class="flex justify-end pt-4">
-                                <button type="button" onclick="nextBookingStep(2)" class="px-6 py-2.5 rounded-xl bg-roseGold-600 text-white font-medium text-xs tracking-wider uppercase hover:bg-roseGold-500 transition-all">
-                                    Next: Choose Stylist <i class="fa-solid fa-arrow-right ml-1"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- STEP 2: Select Stylist -->
-                        <div id="booking-step-2" class="booking-step hidden space-y-4">
-                            <h3 class="text-sm font-semibold uppercase tracking-wider text-roseGold-300 flex items-center gap-2">
-                                <span class="w-6 h-6 rounded-full bg-roseGold-500/20 text-roseGold-300 text-xs flex items-center justify-center">2</span> Choose Stylist
-                            </h3>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="booking-stylist-options"></div>
-                            <div class="flex justify-between pt-4">
-                                <button type="button" onclick="prevBookingStep(1)" class="px-5 py-2.5 rounded-xl glass-card text-roseGold-200 text-xs uppercase"><i class="fa-solid fa-arrow-left mr-1"></i> Back</button>
-                                <button type="button" onclick="nextBookingStep(3)" class="px-6 py-2.5 rounded-xl bg-roseGold-600 text-white font-medium text-xs tracking-wider uppercase hover:bg-roseGold-500 transition-all">Next: Select Slot <i class="fa-solid fa-arrow-right ml-1"></i></button>
-                            </div>
-                        </div>
-
-                        <!-- STEP 3: Date & Time -->
-                        <div id="booking-step-3" class="booking-step hidden space-y-4">
-                            <h3 class="text-sm font-semibold uppercase tracking-wider text-roseGold-300 flex items-center gap-2">
-                                <span class="w-6 h-6 rounded-full bg-roseGold-500/20 text-roseGold-300 text-xs flex items-center justify-center">3</span> Date & Time Slot
-                            </h3>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-xs font-medium text-roseGold-200 mb-1.5">Select Date</label>
-                                    <input type="date" id="booking-date" required onchange="renderTimeSlots()" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-roseGold-400">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-medium text-roseGold-200 mb-1.5">Available Slots</label>
-                                    <div id="time-slots-grid" class="grid grid-cols-3 gap-2"></div>
-                                    <input type="hidden" id="booking-time-slot" required>
-                                </div>
-                            </div>
-                            <div class="flex justify-between pt-4">
-                                <button type="button" onclick="prevBookingStep(2)" class="px-5 py-2.5 rounded-xl glass-card text-roseGold-200 text-xs uppercase"><i class="fa-solid fa-arrow-left mr-1"></i> Back</button>
-                                <button type="button" onclick="nextBookingStep(4)" class="px-6 py-2.5 rounded-xl bg-roseGold-600 text-white font-medium text-xs tracking-wider uppercase hover:bg-roseGold-500 transition-all">Next: Contact Details <i class="fa-solid fa-arrow-right ml-1"></i></button>
-                            </div>
-                        </div>
-
-                        <!-- STEP 4: Client Details -->
-                        <div id="booking-step-4" class="booking-step hidden space-y-4">
-                            <h3 class="text-sm font-semibold uppercase tracking-wider text-roseGold-300 flex items-center gap-2">
-                                <span class="w-6 h-6 rounded-full bg-roseGold-500/20 text-roseGold-300 text-xs flex items-center justify-center">4</span> Client Details & Confirmation
-                            </h3>
-                            <div id="booking-summary-box" class="glass-card p-4 rounded-2xl border border-roseGold-500/20 bg-charcoalLight/60 text-xs space-y-2"></div>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block text-xs font-medium text-roseGold-200 mb-1">Full Name *</label>
-                                    <input type="text" id="client-name" required placeholder="e.g. Sophia Loren" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-roseGold-400">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-medium text-roseGold-200 mb-1">Email Address *</label>
-                                    <input type="email" id="client-email" required placeholder="sophia@example.com" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-roseGold-400">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-medium text-roseGold-200 mb-1">Phone Number *</label>
-                                    <input type="tel" id="client-phone" required placeholder="+1 (555) 019-2834" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-roseGold-400">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-medium text-roseGold-200 mb-1">Special Requests (Optional)</label>
-                                    <input type="text" id="client-notes" placeholder="e.g. Sensitive skin, bridal theme" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-roseGold-400">
-                                </div>
-                            </div>
-                            <div class="flex justify-between pt-4">
-                                <button type="button" onclick="prevBookingStep(3)" class="px-5 py-2.5 rounded-xl glass-card text-roseGold-200 text-xs uppercase"><i class="fa-solid fa-arrow-left mr-1"></i> Back</button>
-                                <button type="submit" id="booking-submit-btn" class="px-8 py-3 rounded-xl bg-gradient-to-r from-roseGold-500 to-roseGold-700 text-white font-semibold text-xs tracking-wider uppercase shadow-lg shadow-roseGold-600/30 hover:scale-105 transition-all">
-                                    <i class="fa-solid fa-check-circle mr-1.5"></i> Confirm & Book Now
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </section>
-
-            <!-- Gallery Section -->
-            <section id="gallery" class="max-w-7xl mx-auto px-4 sm:px-6">
-                <div class="text-center max-w-2xl mx-auto mb-10">
-                    <span class="text-roseGold-400 text-xs font-bold uppercase tracking-widest">Visual Transformations</span>
-                    <h2 class="font-serif text-3xl font-bold mt-1">Our Studio Gallery</h2>
-                    <div class="w-16 h-0.5 bg-roseGold-500 mx-auto mt-3"></div>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="relative group overflow-hidden rounded-2xl h-64 glass-card">
-                        <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80" alt="Hair Styling" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-transparent opacity-80"></div>
-                        <div class="absolute bottom-3 left-3 right-3"><span class="text-[10px] uppercase font-bold text-roseGold-300">Hair Artistry</span><h4 class="text-sm font-semibold text-white">Balayage & Glow Styling</h4></div>
-                    </div>
-                    <div class="relative group overflow-hidden rounded-2xl h-64 glass-card">
-                        <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80" alt="Facial Treatment" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-transparent opacity-80"></div>
-                        <div class="absolute bottom-3 left-3 right-3"><span class="text-[10px] uppercase font-bold text-roseGold-300">Skin Wellness</span><h4 class="text-sm font-semibold text-white">Hydra-Glow Facial</h4></div>
-                    </div>
-                    <div class="relative group overflow-hidden rounded-2xl h-64 glass-card">
-                        <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=600&q=80" alt="Nail Art" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-transparent opacity-80"></div>
-                        <div class="absolute bottom-3 left-3 right-3"><span class="text-[10px] uppercase font-bold text-roseGold-300">Nail Studio</span><h4 class="text-sm font-semibold text-white">Luxury Gel Couture</h4></div>
-                    </div>
-                    <div class="relative group overflow-hidden rounded-2xl h-64 glass-card">
-                        <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" alt="Bridal Glam" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-transparent opacity-80"></div>
-                        <div class="absolute bottom-3 left-3 right-3"><span class="text-[10px] uppercase font-bold text-roseGold-300">Bridal Special</span><h4 class="text-sm font-semibold text-white">Royal Glam Makeover</h4></div>
+    <!-- BOOKING WIZARD -->
+    <section id="booking" class="max-w-5xl mx-auto px-4 sm:px-6 scroll-mt-24 py-10">
+        <div class="glass-card rounded-3xl p-6 sm:p-10 border border-roseGold-500/30 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-roseGold-500/10 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="text-center mb-8">
+                <span class="text-roseGold-400 text-xs font-bold uppercase tracking-widest">Seamless Reservation</span>
+                <h2 class="font-serif text-3xl font-bold mt-1">Book Your Experience</h2>
+                <p class="text-xs text-roseGold-200/60 mt-1">Select your service, stylist, and preferred time.</p>
+            </div>
+            <div class="grid grid-cols-3 gap-2 mb-8">
+                <div id="step-indicator-1" class="h-1.5 rounded-full bg-roseGold-500 transition-all"></div>
+                <div id="step-indicator-2" class="h-1.5 rounded-full bg-charcoalLight transition-all"></div>
+                <div id="step-indicator-3" class="h-1.5 rounded-full bg-charcoalLight transition-all"></div>
+            </div>
+            <form id="booking-form" onsubmit="handleBookingSubmit(event)">
+                <!-- Step 1: Service -->
+                <div id="booking-step-1" class="booking-step space-y-4">
+                    <h3 class="text-sm font-semibold uppercase tracking-wider text-roseGold-300 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-roseGold-500/20 text-roseGold-300 text-xs flex items-center justify-center">1</span> Select Service
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="booking-service-options"></div>
+                    <div class="flex justify-end pt-4">
+                        <button type="button" onclick="nextBookingStep(2)" class="px-6 py-2.5 rounded-xl bg-roseGold-600 text-white font-medium text-xs tracking-wider uppercase hover:bg-roseGold-500 transition-all">
+                            Next: Choose Stylist <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
                     </div>
                 </div>
-            </section>
-
-            <!-- My Appointments Lookup Section -->
-            <section id="my-appointments" class="max-w-4xl mx-auto px-4 sm:px-6">
-                <div class="glass-card rounded-3xl p-6 sm:p-8 border border-roseGold-500/20">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <!-- Step 2: Stylist + Date/Time -->
+                <div id="booking-step-2" class="booking-step hidden space-y-4">
+                    <h3 class="text-sm font-semibold uppercase tracking-wider text-roseGold-300 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-roseGold-500/20 text-roseGold-300 text-xs flex items-center justify-center">2</span> Choose Stylist & Time
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="booking-stylist-options"></div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                         <div>
-                            <h3 class="font-serif text-2xl font-bold text-white">Lookup My Booking</h3>
-                            <p class="text-xs text-roseGold-200/60">Enter your Reference Code or Phone Number to verify booking status.</p>
+                            <label class="block text-xs font-medium text-roseGold-200 mb-1.5">Select Date</label>
+                            <input type="date" id="booking-date" required onchange="renderTimeSlots()" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-roseGold-400">
                         </div>
-                        <div class="flex gap-2">
-                            <input type="text" id="lookup-input" placeholder="e.g. GLOW-9281 or 555-019" class="bg-charcoal border border-roseGold-500/30 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-roseGold-400 w-full sm:w-64">
-                            <button onclick="lookupBooking()" class="px-5 py-2 rounded-xl bg-roseGold-600 text-white text-xs font-semibold hover:bg-roseGold-500 transition-all">Search</button>
-                        </div>
-                    </div>
-                    <div id="lookup-results" class="hidden space-y-3 pt-4 border-t border-roseGold-500/10"></div>
-                </div>
-            </section>
-
-            <!-- Reviews & Rating Submission -->
-            <section id="reviews" class="max-w-5xl mx-auto px-4 sm:px-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="glass-card p-6 rounded-3xl h-fit border border-roseGold-500/20">
-                        <h3 class="font-serif text-xl font-bold text-white mb-2">Leave a Review</h3>
-                        <p class="text-xs text-roseGold-200/60 mb-4">Share your recent salon experience with us.</p>
-                        <form onsubmit="handleReviewSubmit(event)" class="space-y-3">
-                            <div>
-                                <label class="block text-[11px] font-medium text-roseGold-200 mb-1">Your Name</label>
-                                <input type="text" id="rev-name" required placeholder="Elena R." class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2 text-xs text-white">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] font-medium text-roseGold-200 mb-1">Rating</label>
-                                <select id="rev-stars" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2 text-xs text-white">
-                                    <option value="5">⭐⭐⭐⭐⭐ (5/5 Excellent)</option>
-                                    <option value="4">⭐⭐⭐⭐ (4/5 Very Good)</option>
-                                    <option value="3">⭐⭐⭐ (3/5 Average)</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-[11px] font-medium text-roseGold-200 mb-1">Feedback Comment</label>
-                                <textarea id="rev-comment" required rows="3" placeholder="Loved the hair treatment!" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2 text-xs text-white"></textarea>
-                            </div>
-                            <button type="submit" class="w-full py-2.5 rounded-xl bg-roseGold-600 text-white text-xs font-semibold hover:bg-roseGold-500 transition-all">Submit Review</button>
-                        </form>
-                    </div>
-                    <div class="md:col-span-2 space-y-4" id="reviews-list-container"></div>
-                </div>
-            </section>
-
-        </div>
-
-        <!-- ========================================== -->
-        <!-- VIEW 2: MANAGER / ADMIN DASHBOARD          -->
-        <!-- ========================================== -->
-        <div id="view-admin" class="hidden max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-8">
-
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-card p-6 rounded-3xl border border-roseGold-500/30">
-                <div>
-                    <span class="text-xs uppercase font-bold text-roseGold-400 tracking-wider">Management Control Panel</span>
-                    <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white">Salon Manager Dashboard</h2>
-                    <p class="text-xs text-roseGold-200/60 mt-0.5">Real-time scheduling, revenue analytics, and client management.</p>
-                </div>
-                <div class="flex items-center gap-3">
-                    <button onclick="refreshAdminView()" class="px-4 py-2 rounded-xl bg-charcoalLight text-roseGold-300 text-xs font-semibold border border-roseGold-500/30 hover:bg-roseGold-900/30 transition-all">
-                        <i class="fa-solid fa-arrows-rotate mr-1.5"></i>Refresh Data
-                    </button>
-                    <button onclick="openAddServiceModal()" class="px-4 py-2 rounded-xl bg-roseGold-600 text-white text-xs font-semibold hover:bg-roseGold-500 transition-all">
-                        <i class="fa-solid fa-plus mr-1.5"></i>Add New Service
-                    </button>
-                </div>
-            </div>
-
-            <!-- Key Metrics -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="glass-card p-5 rounded-2xl border border-roseGold-500/20">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-semibold text-roseGold-300">Total Revenue</span>
-                        <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-sm"><i class="fa-solid fa-dollar-sign"></i></div>
-                    </div>
-                    <div class="text-2xl font-bold text-white" id="stat-revenue">—</div>
-                    <span class="text-[10px] text-emerald-400"><i class="fa-solid fa-arrow-up"></i> From all confirmed bookings</span>
-                </div>
-                <div class="glass-card p-5 rounded-2xl border border-roseGold-500/20">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-semibold text-roseGold-300">Total Bookings</span>
-                        <div class="w-8 h-8 rounded-lg bg-roseGold-500/10 text-roseGold-400 flex items-center justify-center text-sm"><i class="fa-solid fa-calendar-check"></i></div>
-                    </div>
-                    <div class="text-2xl font-bold text-white" id="stat-total-bookings">—</div>
-                    <span class="text-[10px] text-roseGold-300/80">Active client reservations</span>
-                </div>
-                <div class="glass-card p-5 rounded-2xl border border-roseGold-500/20">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-semibold text-roseGold-300">Pending Actions</span>
-                        <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-sm"><i class="fa-solid fa-clock"></i></div>
-                    </div>
-                    <div class="text-2xl font-bold text-amber-300" id="stat-pending">—</div>
-                    <span class="text-[10px] text-amber-400/80">Needs manager confirmation</span>
-                </div>
-                <div class="glass-card p-5 rounded-2xl border border-roseGold-500/20">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-semibold text-roseGold-300">Top Service</span>
-                        <div class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center text-sm"><i class="fa-solid fa-crown"></i></div>
-                    </div>
-                    <div class="text-lg font-bold text-white truncate" id="stat-top-service">—</div>
-                    <span class="text-[10px] text-purple-300/80">Most requested treatment</span>
-                </div>
-            </div>
-
-            <!-- Appointments Table -->
-            <div class="glass-card rounded-3xl p-6 border border-roseGold-500/20">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                    <div>
-                        <h3 class="font-serif text-xl font-bold text-white">Appointments Master List</h3>
-                        <p class="text-xs text-roseGold-200/60">Filter and update booking statuses in real time.</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <label class="text-xs text-roseGold-200">Filter Status:</label>
-                        <select id="admin-filter-status" onchange="fetchAdminBookings()" class="bg-charcoal border border-roseGold-500/30 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none">
-                            <option value="ALL">All Statuses</option>
-                            <option value="Confirmed">Confirmed</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="overflow-x-auto custom-scrollbar">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-charcoalLight/80 text-roseGold-300 uppercase tracking-wider font-semibold border-b border-roseGold-500/20">
-                            <tr>
-                                <th class="p-3.5">Ref ID</th>
-                                <th class="p-3.5">Client Info</th>
-                                <th class="p-3.5">Service & Stylist</th>
-                                <th class="p-3.5">Date & Time</th>
-                                <th class="p-3.5">Price</th>
-                                <th class="p-3.5">Status</th>
-                                <th class="p-3.5 text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-bookings-table-body" class="divide-y divide-roseGold-500/10">
-                            <tr><td colspan="7" class="p-6 text-center text-roseGold-200/60">Loading bookings…</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- ========================================== -->
-        <!-- VIEW 3: BACKEND CODE SHOWCASE & LIVE API   -->
-        <!-- ========================================== -->
-        <div id="view-backend" class="hidden max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-8">
-
-            <div class="glass-card p-6 rounded-3xl border border-roseGold-500/30">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <span class="text-xs uppercase font-bold text-roseGold-400 tracking-wider">Full-Stack Architecture & Playground</span>
-                        <h2 class="font-serif text-3xl font-bold text-white">Backend Code Showcase & Live API Tester</h2>
-                        <p class="text-xs text-roseGold-200/60 mt-1">Inspect the FastAPI/PostgreSQL backend source code or test live endpoints interactively!</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span id="server-status-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/30">
-                            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span> Checking server…
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TABBED BACKEND VIEWER -->
-            <div class="glass-card rounded-3xl overflow-hidden border border-roseGold-500/20">
-                <div class="bg-charcoalLight border-b border-roseGold-500/20 px-4 flex flex-wrap gap-2 pt-3 custom-scrollbar overflow-x-auto">
-                    <button onclick="switchBackendSubTab('api-tester')" id="subtab-api-tester" class="subtab-btn px-4 py-2.5 rounded-t-xl text-xs font-semibold bg-roseGold-600 text-white transition-all flex items-center gap-1.5">
-                        <i class="fa-solid fa-vial-circle-check"></i> Live Interactive API Tester
-                    </button>
-                    <button onclick="switchBackendSubTab('main.py')" id="subtab-main.py" class="subtab-btn px-4 py-2.5 rounded-t-xl text-xs font-semibold text-roseGold-200 hover:text-white transition-all flex items-center gap-1.5">
-                        <i class="fa-brands fa-python text-blue-400"></i> main.py
-                    </button>
-                    <button onclick="switchBackendSubTab('models.py')" id="subtab-models.py" class="subtab-btn px-4 py-2.5 rounded-t-xl text-xs font-semibold text-roseGold-200 hover:text-white transition-all flex items-center gap-1.5">
-                        <i class="fa-solid fa-database text-roseGold-400"></i> models.py
-                    </button>
-                    <button onclick="switchBackendSubTab('bookings.py')" id="subtab-bookings.py" class="subtab-btn px-4 py-2.5 rounded-t-xl text-xs font-semibold text-roseGold-200 hover:text-white transition-all flex items-center gap-1.5">
-                        <i class="fa-solid fa-route text-amber-400"></i> routes/bookings.py
-                    </button>
-                    <button onclick="switchBackendSubTab('schemas.py')" id="subtab-schemas.py" class="subtab-btn px-4 py-2.5 rounded-t-xl text-xs font-semibold text-roseGold-200 hover:text-white transition-all flex items-center gap-1.5">
-                        <i class="fa-solid fa-list-check text-purple-400"></i> schemas.py
-                    </button>
-                    <button onclick="switchBackendSubTab('.env')" id="subtab-.env" class="subtab-btn px-4 py-2.5 rounded-t-xl text-xs font-semibold text-roseGold-200 hover:text-white transition-all flex items-center gap-1.5">
-                        <i class="fa-solid fa-sliders text-emerald-400"></i> .env
-                    </button>
-                </div>
-
-                <!-- SUB TAB: LIVE API TESTER -->
-                <div id="backend-subtab-content-api-tester" class="p-6 space-y-6">
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                        <div class="lg:col-span-6 space-y-4">
-                            <h3 class="text-sm font-semibold uppercase tracking-wider text-roseGold-300">1. Select API Endpoint</h3>
-                            <div class="space-y-2">
-                                <label class="block text-xs text-roseGold-200">Method & URL</label>
-                                <select id="api-tester-endpoint" onchange="updateApiTesterForm()" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2.5 text-xs text-white font-mono focus:outline-none">
-                                    <option value="GET_ALL">GET /api/bookings — Fetch All Bookings</option>
-                                    <option value="GET_STATS">GET /api/bookings/stats — Dashboard Stats</option>
-                                    <option value="POST_BOOKING">POST /api/bookings — Create New Booking</option>
-                                    <option value="PATCH_STATUS">PATCH /api/bookings/:id/status — Update Status</option>
-                                    <option value="DELETE_BOOKING">DELETE /api/bookings/:id — Delete Booking</option>
-                                    <option value="GET_SERVICES">GET /api/services — List All Services</option>
-                                    <option value="GET_REVIEWS">GET /api/reviews — List All Reviews</option>
-                                </select>
-                            </div>
-                            <div class="glass-card p-4 rounded-2xl space-y-3 bg-charcoal/60">
-                                <div class="text-xs font-bold text-roseGold-300 uppercase tracking-wider">Request Parameters & Body</div>
-                                <div id="api-tester-id-container" class="hidden">
-                                    <label class="block text-[11px] font-medium text-roseGold-200 mb-1">Booking Ref ID</label>
-                                    <input type="text" id="api-tester-ref-id" value="GLOW-1001" class="w-full bg-charcoal border border-roseGold-500/30 rounded-lg p-2 text-xs font-mono text-white">
-                                </div>
-                                <div id="api-tester-status-container" class="hidden">
-                                    <label class="block text-[11px] font-medium text-roseGold-200 mb-1">New Status</label>
-                                    <select id="api-tester-status-value" class="w-full bg-charcoal border border-roseGold-500/30 rounded-lg p-2 text-xs text-white">
-                                        <option value="Confirmed">Confirmed</option>
-                                        <option value="Completed">Completed</option>
-                                        <option value="Cancelled">Cancelled</option>
-                                    </select>
-                                </div>
-                                <div id="api-tester-body-container" class="space-y-2 hidden">
-                                    <label class="block text-[11px] font-medium text-roseGold-200">JSON Request Body</label>
-                                    <textarea id="api-tester-json-body" rows="8" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-3 text-xs font-mono text-emerald-300 focus:outline-none custom-scrollbar"></textarea>
-                                </div>
-                                <div id="api-tester-no-body" class="text-xs text-roseGold-200/50 italic">No request body required for this endpoint.</div>
-                            </div>
-                            <button onclick="executeApiRequest()" class="w-full py-3 rounded-xl bg-gradient-to-r from-roseGold-500 to-roseGold-700 text-white text-xs font-bold uppercase tracking-wider shadow-lg shadow-roseGold-600/30 hover:scale-[1.01] transition-all flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-paper-plane"></i> Send HTTP Request to FastAPI Server
-                            </button>
-                        </div>
-
-                        <div class="lg:col-span-6 space-y-4">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-sm font-semibold uppercase tracking-wider text-roseGold-300">2. Server Response</h3>
-                                <div id="api-tester-response-status" class="text-xs font-mono px-2.5 py-1 rounded-md bg-charcoalLight text-roseGold-200/50 border border-roseGold-500/20">—</div>
-                            </div>
-                            <div class="glass-card p-4 rounded-2xl bg-charcoal/90 border border-roseGold-500/20 font-mono text-xs text-roseGold-100 min-h-[380px] flex flex-col justify-between">
-                                <div>
-                                    <div class="text-[10px] uppercase font-bold text-roseGold-400 border-b border-roseGold-500/20 pb-2 mb-3 flex items-center justify-between">
-                                        <span>Response Data</span>
-                                        <span id="api-response-time" class="text-roseGold-200/50">—</span>
-                                    </div>
-                                    <pre id="api-tester-response-output" class="text-emerald-300 overflow-x-auto custom-scrollbar max-h-80 whitespace-pre-wrap">{
-  "message": "Click 'Send HTTP Request' to call the live FastAPI server!"
-}</pre>
-                                </div>
-                                <div class="text-[10px] text-roseGold-200/40 border-t border-roseGold-500/10 pt-2 mt-4 flex items-center justify-between">
-                                    <span>Engine: FastAPI + PostgreSQL (asyncpg)</span>
-                                    <span>Content-Type: application/json</span>
-                                </div>
-                            </div>
+                        <div>
+                            <label class="block text-xs font-medium text-roseGold-200 mb-1.5">Available Slots</label>
+                            <div id="time-slots-grid" class="grid grid-cols-3 gap-2"></div>
+                            <input type="hidden" id="booking-time-slot" required>
                         </div>
                     </div>
-                </div>
-
-                <!-- SUB TAB: CODE VIEWERS -->
-                <div id="backend-code-viewer-container" class="hidden p-6 relative">
-                    <button onclick="copyCurrentCode()" class="absolute top-8 right-8 px-3 py-1.5 rounded-lg bg-charcoalLight border border-roseGold-500/30 text-roseGold-200 hover:text-white text-xs font-mono transition-all z-10 flex items-center gap-1.5">
-                        <i class="fa-regular fa-copy"></i> Copy Code
-                    </button>
-                    <pre class="bg-charcoal/90 p-5 rounded-2xl border border-roseGold-500/20 font-mono text-xs text-roseGold-100 overflow-x-auto custom-scrollbar max-h-[550px] leading-relaxed"><code id="code-display-area" class="text-emerald-300"></code></pre>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="glass-card border-t border-roseGold-500/20 py-8 px-4 mt-20">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-roseGold-200/60">
-            <div class="flex items-center gap-2">
-                <span class="font-serif font-bold text-roseGold-300">GLOW & GRACE</span>
-                <span>© 2026 Beauty Lounge & Spa Inc. All rights reserved.</span>
-            </div>
-            <div class="flex items-center gap-4">
-                <a href="#" class="hover:text-roseGold-300"><i class="fa-brands fa-instagram text-base"></i></a>
-                <a href="#" class="hover:text-roseGold-300"><i class="fa-brands fa-facebook text-base"></i></a>
-                <a href="#" class="hover:text-roseGold-300"><i class="fa-brands fa-pinterest text-base"></i></a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- ADD SERVICE MODAL -->
-    <div id="add-service-modal" class="fixed inset-0 z-50 bg-charcoal/80 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="glass-card p-6 rounded-3xl max-w-md w-full border border-roseGold-500/30 space-y-4">
-            <div class="flex items-center justify-between">
-                <h3 class="font-serif text-xl font-bold text-white">Add New Service</h3>
-                <button onclick="closeAddServiceModal()" class="text-roseGold-200 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <form onsubmit="handleAddNewService(event)" class="space-y-3">
-                <div>
-                    <label class="block text-xs font-medium text-roseGold-200 mb-1">Service Title</label>
-                    <input type="text" id="new-srv-title" required placeholder="e.g. Keratin Therapy" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2.5 text-xs text-white">
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block text-xs font-medium text-roseGold-200 mb-1">Category</label>
-                        <select id="new-srv-category" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2.5 text-xs text-white">
-                            <option value="hair">Hair Care</option>
-                            <option value="skin">Skin & Facial</option>
-                            <option value="nails">Nails & Spa</option>
-                            <option value="bridal">Bridal & Glam</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-roseGold-200 mb-1">Price ($)</label>
-                        <input type="number" id="new-srv-price" required placeholder="120" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2.5 text-xs text-white">
+                    <div class="flex justify-between pt-4">
+                        <button type="button" onclick="prevBookingStep(1)" class="px-5 py-2.5 rounded-xl glass-card text-roseGold-200 text-xs uppercase"><i class="fa-solid fa-arrow-left mr-1"></i> Back</button>
+                        <button type="button" onclick="nextBookingStep(3)" class="px-6 py-2.5 rounded-xl bg-roseGold-600 text-white font-medium text-xs tracking-wider uppercase hover:bg-roseGold-500 transition-all">Review & Confirm <i class="fa-solid fa-arrow-right ml-1"></i></button>
                     </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-medium text-roseGold-200 mb-1">Duration</label>
-                    <input type="text" id="new-srv-duration" required placeholder="60 mins" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2.5 text-xs text-white">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-roseGold-200 mb-1">Description</label>
-                    <input type="text" id="new-srv-desc" required placeholder="Short description of the service" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2.5 text-xs text-white">
-                </div>
-                <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="closeAddServiceModal()" class="px-4 py-2 rounded-xl glass-card text-xs text-roseGold-200">Cancel</button>
-                    <button type="submit" class="px-5 py-2 rounded-xl bg-roseGold-600 text-white text-xs font-semibold">Save Service</button>
+                <!-- Step 3: Summary + Notes -->
+                <div id="booking-step-3" class="booking-step hidden space-y-4">
+                    <h3 class="text-sm font-semibold uppercase tracking-wider text-roseGold-300 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-roseGold-500/20 text-roseGold-300 text-xs flex items-center justify-center">3</span> Confirm Booking
+                    </h3>
+                    <div id="booking-summary-box" class="glass-card p-4 rounded-2xl border border-roseGold-500/20 bg-charcoalLight/60 text-xs space-y-2"></div>
+                    <div>
+                        <label class="block text-xs font-medium text-roseGold-200 mb-1">Special Requests (Optional)</label>
+                        <input type="text" id="client-notes" placeholder="e.g. Sensitive skin, bridal theme" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-roseGold-400">
+                    </div>
+                    <div class="flex justify-between pt-2">
+                        <button type="button" onclick="prevBookingStep(2)" class="px-5 py-2.5 rounded-xl glass-card text-roseGold-200 text-xs uppercase"><i class="fa-solid fa-arrow-left mr-1"></i> Back</button>
+                        <button type="submit" id="booking-submit-btn" class="px-8 py-3 rounded-xl bg-gradient-to-r from-roseGold-500 to-roseGold-700 text-white font-semibold text-xs tracking-wider uppercase shadow-lg hover:scale-105 transition-all">
+                            <i class="fa-solid fa-check-circle mr-1.5"></i> Confirm & Book Now
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
-    </div>
-
-    <!-- MAIN JAVASCRIPT APPLICATION -->
-    <script>
-        // ==========================================
-        // CONFIG
-        // ==========================================
-        const API_BASE = 'http://localhost:8000';
-
-        const stylistsData = [
-            { id: 'stylist-1', name: 'Victoria Vance', title: 'Master Hair Specialist', rating: '4.9 ⭐', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80' },
-            { id: 'stylist-2', name: 'Camila Rodriguez', title: 'Senior Esthetician', rating: '5.0 ⭐', img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80' },
-            { id: 'stylist-3', name: 'Aiden Dupont', title: 'Bridal Glam Director', rating: '4.8 ⭐', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80' }
-        ];
-
-        let servicesData = [];
-        let currentBookingState = { serviceId: '', stylistId: '', date: '', timeSlot: '' };
-
-        // ==========================================
-        // BACKEND PYTHON SOURCE CODE SNIPPETS
-        // ==========================================
-        const backendCodeFiles = {
-            'main.py': `# main.py — FastAPI Application Entry Point
-from contextlib import asynccontextmanager
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-
-from database import engine, Base
-from routes import bookings, services, reviews
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-    yield
-
-
-app = FastAPI(
-    title="Glow & Grace Beauty Lounge API",
-    version="1.0.0",
-    lifespan=lifespan,
-)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-app.include_router(bookings.router)
-app.include_router(services.router)
-app.include_router(reviews.router)
-
-
-@app.get("/")
-async def root():
-    return {"message": "Glow & Grace REST API — Active", "docs": "/docs"}`,
-
-            'models.py': `# models.py — SQLAlchemy ORM Models (PostgreSQL)
-from sqlalchemy import Column, String, Integer, Float, Text, DateTime, Enum as SAEnum
-from sqlalchemy.sql import func
-import enum
-from database import Base
-
-
-class BookingStatus(str, enum.Enum):
-    confirmed  = "Confirmed"
-    pending    = "Pending"
-    completed  = "Completed"
-    cancelled  = "Cancelled"
-
-
-class ServiceCategory(str, enum.Enum):
-    hair   = "hair"
-    skin   = "skin"
-    nails  = "nails"
-    bridal = "bridal"
-
-
-class Booking(Base):
-    __tablename__ = "bookings"
-
-    ref_id        = Column(String, primary_key=True)
-    client_name   = Column(String, nullable=False)
-    client_email  = Column(String, nullable=False)
-    client_phone  = Column(String, nullable=False)
-    service_title = Column(String, nullable=False)
-    price         = Column(Float, nullable=False)
-    stylist_name  = Column(String, nullable=False)
-    date          = Column(String, nullable=False)
-    time_slot     = Column(String, nullable=False)
-    notes         = Column(Text, nullable=True)
-    status        = Column(SAEnum(BookingStatus), default=BookingStatus.confirmed)
-    created_at    = Column(DateTime(timezone=True), server_default=func.now())
-
-
-class Service(Base):
-    __tablename__ = "services"
-
-    id       = Column(String, primary_key=True)
-    category = Column(SAEnum(ServiceCategory), nullable=False)
-    title    = Column(String, nullable=False)
-    price    = Column(Float, nullable=False)
-    duration = Column(String, nullable=False)
-    desc     = Column(Text, nullable=False)
-    img      = Column(String, nullable=False)
-
-
-class Review(Base):
-    __tablename__ = "reviews"
-
-    id         = Column(Integer, primary_key=True, autoincrement=True)
-    name       = Column(String, nullable=False)
-    rating     = Column(Integer, nullable=False)
-    comment    = Column(Text, nullable=False)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())`,
-
-            'bookings.py': `# routes/bookings.py — Booking CRUD Endpoints
-import random, string
-from typing import Optional
-from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func
-
-from database import get_db
-from models import Booking, BookingStatus
-from schemas import BookingCreate, BookingOut, BookingStatusUpdate
-
-router = APIRouter(prefix="/api/bookings", tags=["Bookings"])
-
-
-@router.get("/", response_model=list[BookingOut])
-async def get_all_bookings(
-    status: Optional[str] = Query(None),
-    db: AsyncSession = Depends(get_db),
-):
-    stmt = select(Booking).order_by(Booking.created_at.desc())
-    if status and status != "ALL":
-        stmt = stmt.where(Booking.status == status)
-    result = await db.execute(stmt)
-    return result.scalars().all()
-
-
-@router.get("/lookup", response_model=list[BookingOut])
-async def lookup_booking(q: str = Query(...), db: AsyncSession = Depends(get_db)):
-    stmt = select(Booking).where(
-        Booking.ref_id.ilike(f"%{q}%")
-        | Booking.client_phone.ilike(f"%{q}%")
-        | Booking.client_email.ilike(f"%{q}%")
-    )
-    result = await db.execute(stmt)
-    return result.scalars().all()
-
-
-@router.get("/stats")
-async def get_stats(db: AsyncSession = Depends(get_db)):
-    total   = (await db.execute(select(func.count()).select_from(Booking))).scalar()
-    revenue = (await db.execute(select(func.sum(Booking.price)).where(Booking.status != BookingStatus.cancelled))).scalar() or 0
-    pending = (await db.execute(select(func.count()).select_from(Booking).where(Booking.status == BookingStatus.pending))).scalar()
-    top_row = (await db.execute(select(Booking.service_title, func.count().label("cnt")).group_by(Booking.service_title).order_by(func.count().desc()).limit(1))).first()
-    return {"total_bookings": total, "revenue": revenue, "pending": pending, "top_service": top_row[0] if top_row else "N/A"}
-
-
-@router.post("/", response_model=BookingOut, status_code=201)
-async def create_booking(payload: BookingCreate, db: AsyncSession = Depends(get_db)):
-    ref_id = "GLOW-" + "".join(random.choices(string.digits, k=4))
-    booking = Booking(ref_id=ref_id, **payload.model_dump())
-    db.add(booking)
-    await db.commit()
-    await db.refresh(booking)
-    return booking
-
-
-@router.patch("/{ref_id}/status", response_model=BookingOut)
-async def update_status(ref_id: str, payload: BookingStatusUpdate, db: AsyncSession = Depends(get_db)):
-    result  = await db.execute(select(Booking).where(Booking.ref_id == ref_id))
-    booking = result.scalar_one_or_none()
-    if not booking:
-        raise HTTPException(status_code=404, detail="Booking not found")
-    booking.status = payload.status
-    await db.commit()
-    await db.refresh(booking)
-    return booking
-
-
-@router.delete("/{ref_id}")
-async def delete_booking(ref_id: str, db: AsyncSession = Depends(get_db)):
-    result  = await db.execute(select(Booking).where(Booking.ref_id == ref_id))
-    booking = result.scalar_one_or_none()
-    if not booking:
-        raise HTTPException(status_code=404, detail="Booking not found")
-    await db.delete(booking)
-    await db.commit()
-    return {"success": True, "message": f"Booking {ref_id} deleted"}`,
-
-            'schemas.py': `# schemas.py — Pydantic Request/Response Models
-from pydantic import BaseModel
-from typing import Optional
-from datetime import datetime
-from models import BookingStatus, ServiceCategory
-
-
-class BookingCreate(BaseModel):
-    client_name:   str
-    client_email:  str
-    client_phone:  str
-    service_title: str
-    price:         float
-    stylist_name:  str
-    date:          str
-    time_slot:     str
-    notes:         Optional[str] = None
-
-
-class BookingStatusUpdate(BaseModel):
-    status: BookingStatus
-
-
-class BookingOut(BaseModel):
-    ref_id:        str
-    client_name:   str
-    client_email:  str
-    client_phone:  str
-    service_title: str
-    price:         float
-    stylist_name:  str
-    date:          str
-    time_slot:     str
-    notes:         Optional[str] = None
-    status:        BookingStatus
-    created_at:    Optional[datetime] = None
-
-    model_config = {"from_attributes": True}
-
-
-class ServiceCreate(BaseModel):
-    category: ServiceCategory
-    title:    str
-    price:    float
-    duration: str
-    desc:     str
-    img:      Optional[str] = "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=400&q=80"
-
-
-class ServiceOut(ServiceCreate):
-    id: str
-    model_config = {"from_attributes": True}
-
-
-class ReviewCreate(BaseModel):
-    name:    str
-    rating:  int
-    comment: str
-
-
-class ReviewOut(ReviewCreate):
-    id:         int
-    created_at: Optional[datetime] = None
-    model_config = {"from_attributes": True}`,
-
-            '.env': `# .env — Environment Configuration
-DATABASE_URL=postgresql+asyncpg://postgres:password@localhost:5432/beauty_parlor
-
-# To run the server:
-#   cd backend
-#   pip install -r requirements.txt
-#   python seed.py        # seeds initial demo data
-#   uvicorn main:app --reload --port 8000
-
-# API Documentation available at:
-#   http://localhost:8000/docs  (Swagger UI)
-#   http://localhost:8000/redoc (ReDoc)`
-        };
-
-        // ==========================================
-        // INITIALIZATION
-        // ==========================================
-        window.onload = async function () {
-            await fetchServices();
-            renderBookingOptions();
-            await fetchReviews();
-            updateApiTesterForm();
-            checkServerStatus();
-
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('booking-date').value = today;
-            renderTimeSlots();
-        };
-
-        // ==========================================
-        // API HELPERS
-        // ==========================================
-        async function apiFetch(path, options = {}) {
-            const res = await fetch(`${API_BASE}${path}`, {
-                headers: { 'Content-Type': 'application/json' },
-                ...options,
-            });
-            if (!res.ok) {
-                const err = await res.json().catch(() => ({}));
-                throw new Error(err.detail || `HTTP ${res.status}`);
-            }
-            return res.json();
-        }
-
-        async function checkServerStatus() {
-            const badge = document.getElementById('server-status-badge');
-            try {
-                await fetch(`${API_BASE}/`);
-                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> FastAPI Server: Online`;
-                badge.className = "inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/30";
-            } catch {
-                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-rose-400"></span> Server Offline — start with uvicorn`;
-                badge.className = "inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/10 text-rose-400 text-xs font-semibold border border-rose-500/30";
-            }
-        }
-
-        // ==========================================
-        // SERVICES
-        // ==========================================
-        async function fetchServices() {
-            try {
-                servicesData = await apiFetch('/api/services');
-            } catch {
-                showToast('Could not load services from server', 'error');
-            }
-            renderServicesGrid(servicesData);
-            renderBookingOptions();
-        }
-
-        function filterServices(category) {
-            const btns = document.querySelectorAll('.service-tab-btn');
-            btns.forEach(b => {
-                b.classList.remove('bg-roseGold-600', 'text-white');
-                b.classList.add('glass-card', 'text-roseGold-200');
-            });
-            event.target.classList.remove('glass-card', 'text-roseGold-200');
-            event.target.classList.add('bg-roseGold-600', 'text-white');
-            const list = category === 'all' ? servicesData : servicesData.filter(s => s.category === category);
-            renderServicesGrid(list);
-        }
-
-        function renderServicesGrid(list) {
-            const container = document.getElementById('services-grid');
-            if (!list.length) {
-                container.innerHTML = `<div class="col-span-3 text-center py-12 text-roseGold-200/50">No services found. Start the backend and seed data.</div>`;
-                return;
-            }
-            container.innerHTML = list.map(s => `
-                <div class="glass-card rounded-3xl overflow-hidden glass-card-hover transition-all flex flex-col justify-between">
-                    <div>
-                        <div class="relative h-48 overflow-hidden">
-                            <img src="${s.img}" alt="${s.title}" class="w-full h-full object-cover">
-                            <span class="absolute top-3 right-3 bg-charcoal/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-roseGold-300 border border-roseGold-500/20">$${s.price}</span>
-                        </div>
-                        <div class="p-5 space-y-2">
-                            <div class="flex items-center gap-2 text-[11px] font-semibold text-roseGold-400 uppercase tracking-wider"><i class="fa-regular fa-clock"></i> ${s.duration}</div>
-                            <h3 class="font-serif text-lg font-bold text-white">${s.title}</h3>
-                            <p class="text-xs text-roseGold-200/70 font-light">${s.desc}</p>
-                        </div>
-                    </div>
-                    <div class="p-5 pt-0">
-                        <button onclick="quickBookService('${s.id}')" class="w-full py-2.5 rounded-xl bg-charcoalLight hover:bg-roseGold-600 border border-roseGold-500/30 text-roseGold-200 hover:text-white font-semibold text-xs transition-all uppercase tracking-wider">
-                            Book This Service
-                        </button>
-                    </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+        <div class="text-center max-w-2xl mx-auto mb-10">
+            <span class="text-roseGold-400 text-xs font-bold uppercase tracking-widest">Visual Transformations</span>
+            <h2 class="font-serif text-3xl font-bold mt-1">Our Studio Gallery</h2>
+            <div class="w-16 h-0.5 bg-roseGold-500 mx-auto mt-3"></div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="relative group overflow-hidden rounded-2xl h-64 glass-card"><img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"><div class="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-transparent opacity-80"></div><div class="absolute bottom-3 left-3 right-3"><span class="text-[10px] uppercase font-bold text-roseGold-300">Hair Artistry</span><h4 class="text-sm font-semibold text-white">Balayage & Glow Styling</h4></div></div>
+            <div class="relative group overflow-hidden rounded-2xl h-64 glass-card"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"><div class="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-transparent opacity-80"></div><div class="absolute bottom-3 left-3 right-3"><span class="text-[10px] uppercase font-bold text-roseGold-300">Skin Wellness</span><h4 class="text-sm font-semibold text-white">Hydra-Glow Facial</h4></div></div>
+            <div class="relative group overflow-hidden rounded-2xl h-64 glass-card"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"><div class="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-transparent opacity-80"></div><div class="absolute bottom-3 left-3 right-3"><span class="text-[10px] uppercase font-bold text-roseGold-300">Nail Studio</span><h4 class="text-sm font-semibold text-white">Luxury Gel Couture</h4></div></div>
+            <div class="relative group overflow-hidden rounded-2xl h-64 glass-card"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"><div class="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-transparent opacity-80"></div><div class="absolute bottom-3 left-3 right-3"><span class="text-[10px] uppercase font-bold text-roseGold-300">Bridal Special</span><h4 class="text-sm font-semibold text-white">Royal Glam Makeover</h4></div></div>
+        </div>
+    </section>
+
+    <!-- MY BOOKINGS -->
+    <section id="my-bookings" class="max-w-4xl mx-auto px-4 sm:px-6 py-10">
+        <div class="glass-card rounded-3xl p-6 sm:p-8 border border-roseGold-500/20">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h3 class="font-serif text-2xl font-bold text-white">My Bookings</h3>
+                    <p id="my-bookings-subtitle" class="text-xs text-roseGold-200/60 mt-0.5">Your upcoming and past appointments.</p>
                 </div>
-            `).join('');
-        }
-
-        function quickBookService(serviceId) {
-            currentBookingState.serviceId = serviceId;
-            renderBookingOptions();
-            window.location.hash = '#booking';
-            nextBookingStep(2);
-        }
-
-        // ==========================================
-        // BOOKING FLOW
-        // ==========================================
-        function nextBookingStep(stepNum) {
-            if (stepNum === 2 && !currentBookingState.serviceId) { showToast("Please select a service first", "error"); return; }
-            if (stepNum === 3 && !currentBookingState.stylistId) { showToast("Please select a master stylist", "error"); return; }
-            if (stepNum === 4 && (!currentBookingState.date || !currentBookingState.timeSlot)) { showToast("Please select both date and time slot", "error"); return; }
-
-            document.querySelectorAll('.booking-step').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`booking-step-${stepNum}`).classList.remove('hidden');
-
-            for (let i = 1; i <= 4; i++) {
-                document.getElementById(`step-indicator-${i}`).className =
-                    `h-1.5 rounded-full transition-all ${i <= stepNum ? 'bg-roseGold-500' : 'bg-charcoalLight'}`;
-            }
-            if (stepNum === 4) updateBookingSummary();
-        }
-
-        function prevBookingStep(stepNum) {
-            document.querySelectorAll('.booking-step').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`booking-step-${stepNum}`).classList.remove('hidden');
-        }
-
-        function renderBookingOptions() {
-            const srvContainer = document.getElementById('booking-service-options');
-            srvContainer.innerHTML = servicesData.map(s => `
-                <label class="glass-card p-3.5 rounded-2xl cursor-pointer flex items-center justify-between border ${currentBookingState.serviceId === s.id ? 'border-roseGold-500 bg-roseGold-900/20' : 'border-roseGold-500/20'} hover:border-roseGold-400 transition-all">
-                    <div class="flex items-center gap-3">
-                        <input type="radio" name="booking-srv" value="${s.id}" ${currentBookingState.serviceId === s.id ? 'checked' : ''} onchange="currentBookingState.serviceId='${s.id}'" class="accent-roseGold-500">
-                        <div>
-                            <div class="text-xs font-bold text-white">${s.title}</div>
-                            <div class="text-[10px] text-roseGold-200/60">${s.duration}</div>
-                        </div>
-                    </div>
-                    <span class="text-xs font-semibold text-roseGold-300">$${s.price}</span>
-                </label>
-            `).join('');
-
-            const stylistContainer = document.getElementById('booking-stylist-options');
-            stylistContainer.innerHTML = stylistsData.map(st => `
-                <label class="glass-card p-4 rounded-2xl cursor-pointer text-center border ${currentBookingState.stylistId === st.id ? 'border-roseGold-500 bg-roseGold-900/20' : 'border-roseGold-500/20'} hover:border-roseGold-400 transition-all block">
-                    <input type="radio" name="booking-stylist" value="${st.id}" ${currentBookingState.stylistId === st.id ? 'checked' : ''} onchange="currentBookingState.stylistId='${st.id}'" class="hidden">
-                    <img src="${st.img}" class="w-16 h-16 rounded-full mx-auto mb-2 object-cover border-2 border-roseGold-400/50">
-                    <div class="text-xs font-bold text-white">${st.name}</div>
-                    <div class="text-[10px] text-roseGold-200/60">${st.title}</div>
-                    <span class="inline-block mt-2 px-2 py-0.5 rounded-md bg-roseGold-500/10 text-[10px] text-accentGold font-medium">${st.rating}</span>
-                </label>
-            `).join('');
-        }
-
-        function renderTimeSlots() {
-            currentBookingState.date = document.getElementById('booking-date').value;
-            const slots = ['09:00 AM', '10:30 AM', '12:00 PM', '01:30 PM', '03:00 PM', '04:30 PM'];
-            const container = document.getElementById('time-slots-grid');
-            container.innerHTML = slots.map(slot => `
-                <button type="button" onclick="selectTimeSlot('${slot}')" class="px-3 py-2 rounded-xl text-xs font-medium glass-card border transition-all text-center ${currentBookingState.timeSlot === slot ? 'bg-roseGold-600 text-white border-roseGold-500' : 'border-roseGold-500/20 hover:border-roseGold-400 text-roseGold-200'}">
-                    ${slot}
+                <button onclick="fetchMyBookings()" class="px-4 py-2 rounded-xl glass-card text-roseGold-300 text-xs border border-roseGold-500/30 hover:bg-roseGold-900/30 transition-all">
+                    <i class="fa-solid fa-arrows-rotate mr-1.5"></i> Refresh
                 </button>
-            `).join('');
-        }
+            </div>
+            <div id="my-bookings-list" class="space-y-3">
+                <div class="text-xs text-roseGold-200/50 text-center py-8">Sign in with your phone to view your bookings.</div>
+            </div>
+        </div>
+    </section>
 
-        function selectTimeSlot(slot) {
-            currentBookingState.timeSlot = slot;
-            document.getElementById('booking-time-slot').value = slot;
-            renderTimeSlots();
-        }
-
-        function updateBookingSummary() {
-            const s = servicesData.find(x => x.id === currentBookingState.serviceId);
-            const st = stylistsData.find(x => x.id === currentBookingState.stylistId);
-            document.getElementById('booking-summary-box').innerHTML = `
-                <div class="flex justify-between font-bold text-white border-b border-roseGold-500/10 pb-1">
-                    <span>${s?.title || 'Service'}</span><span class="text-roseGold-300">$${s?.price || 0}</span>
-                </div>
-                <div class="grid grid-cols-2 gap-1 text-[11px] text-roseGold-200/80">
-                    <div><i class="fa-solid fa-user-scissors text-roseGold-400 mr-1"></i>${st?.name}</div>
-                    <div><i class="fa-regular fa-calendar text-roseGold-400 mr-1"></i>${currentBookingState.date}</div>
-                    <div><i class="fa-regular fa-clock text-roseGold-400 mr-1"></i>${currentBookingState.timeSlot}</div>
-                    <div><i class="fa-solid fa-tag text-roseGold-400 mr-1"></i>${s?.duration}</div>
-                </div>`;
-        }
-
-        async function handleBookingSubmit(e) {
-            e.preventDefault();
-            const s = servicesData.find(x => x.id === currentBookingState.serviceId);
-            const st = stylistsData.find(x => x.id === currentBookingState.stylistId);
-            const btn = document.getElementById('booking-submit-btn');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> Booking…';
-
-            try {
-                const booking = await apiFetch('/api/bookings', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        client_name: document.getElementById('client-name').value,
-                        client_email: document.getElementById('client-email').value,
-                        client_phone: document.getElementById('client-phone').value,
-                        service_title: s.title,
-                        price: s.price,
-                        stylist_name: st.name,
-                        date: currentBookingState.date,
-                        time_slot: currentBookingState.timeSlot,
-                        notes: document.getElementById('client-notes').value || null,
-                    }),
-                });
-
-                showToast(`Appointment Confirmed! Ref: ${booking.ref_id}`, 'success');
-                document.getElementById('booking-form').reset();
-                currentBookingState = { serviceId: '', stylistId: '', date: '', timeSlot: '' };
-                renderBookingOptions();
-                nextBookingStep(1);
-
-                document.getElementById('lookup-input').value = booking.ref_id;
-                await lookupBooking();
-                window.location.hash = '#my-appointments';
-            } catch (err) {
-                showToast(`Booking failed: ${err.message}`, 'error');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-check-circle mr-1.5"></i> Confirm & Book Now';
-            }
-        }
-
-        async function lookupBooking() {
-            const query = document.getElementById('lookup-input').value.trim();
-            const container = document.getElementById('lookup-results');
-            if (!query) { showToast("Please enter a reference code or phone", "error"); return; }
-
-            try {
-                const results = await apiFetch(`/api/bookings/lookup?q=${encodeURIComponent(query)}`);
-                container.classList.remove('hidden');
-                if (!results.length) {
-                    container.innerHTML = `<div class="text-xs text-roseGold-200/60 py-2">No appointments found matching "${query}".</div>`;
-                } else {
-                    container.innerHTML = results.map(b => `
-                        <div class="glass-card p-4 rounded-2xl border border-roseGold-500/30 bg-charcoal/80 flex flex-col sm:flex-row justify-between sm:items-center gap-3">
-                            <div>
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="font-mono text-xs font-bold text-roseGold-300">${b.ref_id}</span>
-                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold ${b.status === 'Confirmed' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'bg-amber-500/10 text-amber-400'}">${b.status}</span>
-                                </div>
-                                <div class="text-xs font-bold text-white">${b.service_title} with ${b.stylist_name}</div>
-                                <div class="text-[11px] text-roseGold-200/60"><i class="fa-regular fa-calendar mr-1"></i>${b.date} at ${b.time_slot}</div>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-sm font-bold text-roseGold-300">$${b.price}</div>
-                                <div class="text-[10px] text-roseGold-200/50">${b.client_name}</div>
-                            </div>
-                        </div>
-                    `).join('');
-                }
-            } catch (err) {
-                showToast(`Lookup failed: ${err.message}`, 'error');
-            }
-        }
-
-        // ==========================================
-        // REVIEWS
-        // ==========================================
-        async function fetchReviews() {
-            try {
-                const reviews = await apiFetch('/api/reviews');
-                renderReviewsList(reviews);
-            } catch {
-                document.getElementById('reviews-list-container').innerHTML =
-                    `<div class="text-xs text-roseGold-200/50 p-4">Could not load reviews. Is the server running?</div>`;
-            }
-        }
-
-        async function handleReviewSubmit(e) {
-            e.preventDefault();
-            try {
-                await apiFetch('/api/reviews', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        name: document.getElementById('rev-name').value,
-                        rating: parseInt(document.getElementById('rev-stars').value),
-                        comment: document.getElementById('rev-comment').value,
-                    }),
-                });
-                showToast("Thank you for your feedback!", "success");
-                e.target.reset();
-                await fetchReviews();
-            } catch (err) {
-                showToast(`Review failed: ${err.message}`, 'error');
-            }
-        }
-
-        function renderReviewsList(reviews) {
-            const container = document.getElementById('reviews-list-container');
-            if (!reviews.length) {
-                container.innerHTML = `<div class="text-xs text-roseGold-200/50 p-4">No reviews yet. Be the first!</div>`;
-                return;
-            }
-            container.innerHTML = reviews.map(r => {
-                const dateStr = r.created_at
-                    ? new Date(r.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-                    : '';
-                return `
-                <div class="glass-card p-5 rounded-2xl border border-roseGold-500/15 space-y-1.5">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs font-bold text-white">${r.name}</span>
-                        <span class="text-xs text-accentGold">${'⭐'.repeat(r.rating)}</span>
+    <!-- REVIEWS -->
+    <section id="reviews" class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-card p-6 rounded-3xl h-fit border border-roseGold-500/20">
+                <h3 class="font-serif text-xl font-bold text-white mb-2">Leave a Review</h3>
+                <p class="text-xs text-roseGold-200/60 mb-4">Share your recent salon experience.</p>
+                <form onsubmit="handleReviewSubmit(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-[11px] font-medium text-roseGold-200 mb-1">Your Name</label>
+                        <input type="text" id="rev-name" required placeholder="Elena R." class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2 text-xs text-white">
                     </div>
-                    <p class="text-xs text-roseGold-100/80 font-light">"${r.comment}"</p>
-                    <div class="text-[10px] text-roseGold-200/40">${dateStr}</div>
-                </div>`;
-            }).join('');
-        }
-
-        // ==========================================
-        // ADMIN DASHBOARD
-        // ==========================================
-        async function refreshAdminView() {
-            await Promise.all([fetchAdminStats(), fetchAdminBookings()]);
-        }
-
-        async function fetchAdminStats() {
-            try {
-                const stats = await apiFetch('/api/bookings/stats');
-                document.getElementById('stat-revenue').innerText = `$${stats.revenue}`;
-                document.getElementById('stat-total-bookings').innerText = stats.total_bookings;
-                document.getElementById('stat-pending').innerText = stats.pending;
-                document.getElementById('stat-top-service').innerText = stats.top_service;
-            } catch {
-                showToast('Could not load stats', 'error');
-            }
-        }
-
-        async function fetchAdminBookings() {
-            const filter = document.getElementById('admin-filter-status').value;
-            const tbody = document.getElementById('admin-bookings-table-body');
-            tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-roseGold-200/60">Loading…</td></tr>`;
-
-            try {
-                const url = filter === 'ALL' ? '/api/bookings' : `/api/bookings?status=${filter}`;
-                const bookings = await apiFetch(url);
-                renderAdminBookingsTable(bookings);
-            } catch (err) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-rose-400">Error: ${err.message}</td></tr>`;
-            }
-        }
-
-        function renderAdminBookingsTable(bookings) {
-            const tbody = document.getElementById('admin-bookings-table-body');
-            if (!bookings.length) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-roseGold-200/60">No booking entries match the selected filter.</td></tr>`;
-                return;
-            }
-            tbody.innerHTML = bookings.map(b => `
-                <tr class="hover:bg-roseGold-500/5 transition-colors">
-                    <td class="p-3.5 font-mono text-roseGold-300 font-bold">${b.ref_id}</td>
-                    <td class="p-3.5">
-                        <div class="font-semibold text-white">${b.client_name}</div>
-                        <div class="text-[10px] text-roseGold-200/60">${b.client_phone}</div>
-                    </td>
-                    <td class="p-3.5">
-                        <div class="text-white">${b.service_title}</div>
-                        <div class="text-[10px] text-roseGold-400">Stylist: ${b.stylist_name}</div>
-                    </td>
-                    <td class="p-3.5 whitespace-nowrap">
-                        <div class="text-white">${b.date}</div>
-                        <div class="text-[10px] text-roseGold-200/60">${b.time_slot}</div>
-                    </td>
-                    <td class="p-3.5 font-bold text-roseGold-300">$${b.price}</td>
-                    <td class="p-3.5">
-                        <select onchange="updateBookingStatus('${b.ref_id}', this.value)" class="bg-charcoal border border-roseGold-500/30 rounded-lg px-2 py-1 text-[11px] font-medium text-white focus:outline-none">
-                            <option value="Confirmed" ${b.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
-                            <option value="Pending" ${b.status === 'Pending' ? 'selected' : ''}>Pending</option>
-                            <option value="Completed" ${b.status === 'Completed' ? 'selected' : ''}>Completed</option>
-                            <option value="Cancelled" ${b.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                    <div>
+                        <label class="block text-[11px] font-medium text-roseGold-200 mb-1">Rating</label>
+                        <select id="rev-stars" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2 text-xs text-white">
+                            <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                            <option value="4">⭐⭐⭐⭐ Very Good</option>
+                            <option value="3">⭐⭐⭐ Average</option>
                         </select>
-                    </td>
-                    <td class="p-3.5 text-right">
-                        <button onclick="deleteBookingEntry('${b.ref_id}')" class="text-roseGold-400 hover:text-roseGold-200 p-1">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-medium text-roseGold-200 mb-1">Comment</label>
+                        <textarea id="rev-comment" required rows="3" placeholder="Loved the hair treatment!" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2 text-xs text-white"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-2.5 rounded-xl bg-roseGold-600 text-white text-xs font-semibold hover:bg-roseGold-500 transition-all">Submit Review</button>
+                </form>
+            </div>
+            <div class="md:col-span-2 space-y-4" id="reviews-list-container"></div>
+        </div>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="glass-card border-t border-roseGold-500/20 py-8 px-4 mt-10">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-roseGold-200/60">
+        <div class="flex items-center gap-2">
+            <span class="font-serif font-bold text-roseGold-300">GLOW & GRACE</span>
+            <span>© 2026 Beauty Lounge & Spa Inc. All rights reserved.</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="#" class="hover:text-roseGold-300"><i class="fa-brands fa-instagram text-base"></i></a>
+            <a href="#" class="hover:text-roseGold-300"><i class="fa-brands fa-facebook text-base"></i></a>
+            <a href="#" class="hover:text-roseGold-300"><i class="fa-brands fa-pinterest text-base"></i></a>
+        </div>
+    </div>
+</footer>
+
+<script>
+const API_BASE = 'http://localhost:8000';
+
+const stylistsData = [
+    { id: 'stylist-1', name: 'Victoria Vance',    title: 'Master Hair Specialist', rating: '4.9 ⭐', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80' },
+    { id: 'stylist-2', name: 'Camila Rodriguez',  title: 'Senior Esthetician',     rating: '5.0 ⭐', img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80' },
+    { id: 'stylist-3', name: 'Aiden Dupont',       title: 'Bridal Glam Director',   rating: '4.8 ⭐', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80' }
+];
+
+let servicesData = [];
+let currentUser = null;   // { id, phone, name, email }
+let currentBookingState = { serviceId: '', stylistId: '', date: '', timeSlot: '' };
+
+// ── API HELPER ───────────────────────────────────────────────────
+async function apiFetch(path, options = {}) {
+    const res = await fetch(`${API_BASE}${path}`, {
+        headers: { 'Content-Type': 'application/json' },
+        ...options,
+    });
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || `HTTP ${res.status}`);
+    }
+    return res.json();
+}
+
+// ── INIT ─────────────────────────────────────────────────────────
+window.onload = async function () {
+    // Check if user is already identified in session
+    const saved = sessionStorage.getItem('glowUser');
+    if (saved) {
+        currentUser = JSON.parse(saved);
+        onUserIdentified();
+    }
+    await fetchServices();
+    await fetchReviews();
+    document.getElementById('booking-date').value = new Date().toISOString().split('T')[0];
+    renderTimeSlots();
+};
+
+// ── PHONE GATE ───────────────────────────────────────────────────
+function showPhoneStep() {
+    document.getElementById('gate-step-phone').classList.remove('hidden');
+    document.getElementById('gate-step-newuser').classList.add('hidden');
+}
+
+async function handlePhoneSubmit() {
+    const phone = document.getElementById('gate-phone').value.trim();
+    if (!phone) { showToast('Please enter your phone number', 'error'); return; }
+
+    try {
+        // Try to identify — if user exists, name not required
+        const user = await apiFetch('/api/users/identify', {
+            method: 'POST',
+            body: JSON.stringify({ phone }),
+        });
+        currentUser = user;
+        sessionStorage.setItem('glowUser', JSON.stringify(user));
+        onUserIdentified();
+    } catch (err) {
+        if (err.message.includes('Name is required')) {
+            // New user — show name/email form
+            document.getElementById('gate-step-phone').classList.add('hidden');
+            document.getElementById('gate-step-newuser').classList.remove('hidden');
+        } else {
+            showToast(`Error: ${err.message}`, 'error');
         }
+    }
+}
 
-        async function updateBookingStatus(refId, newStatus) {
-            try {
-                await apiFetch(`/api/bookings/${refId}/status`, {
-                    method: 'PATCH',
-                    body: JSON.stringify({ status: newStatus }),
-                });
-                showToast(`Updated ${refId} → ${newStatus}`, 'info');
-                await fetchAdminStats();
-            } catch (err) {
-                showToast(`Update failed: ${err.message}`, 'error');
-            }
+async function handleNewUserSubmit() {
+    const phone = document.getElementById('gate-phone').value.trim();
+    const name  = document.getElementById('gate-name').value.trim();
+    const email = document.getElementById('gate-email').value.trim();
+    if (!name) { showToast('Please enter your name', 'error'); return; }
+
+    try {
+        const user = await apiFetch('/api/users/identify', {
+            method: 'POST',
+            body: JSON.stringify({ phone, name, email: email || null }),
+        });
+        currentUser = user;
+        sessionStorage.setItem('glowUser', JSON.stringify(user));
+        onUserIdentified();
+    } catch (err) {
+        showToast(`Error: ${err.message}`, 'error');
+    }
+}
+
+function onUserIdentified() {
+    // Hide gate
+    document.getElementById('phone-gate').classList.add('hidden');
+
+    // Show user chip in header
+    document.getElementById('user-chip').classList.remove('hidden');
+    document.getElementById('user-chip').classList.add('flex');
+    document.getElementById('user-chip-name').textContent = currentUser.name;
+
+    // Personalise hero
+    document.getElementById('hero-heading').innerHTML =
+        `Welcome back, <span class="gold-gradient-text italic">${currentUser.name.split(' ')[0]}!</span>`;
+
+    // Load their bookings
+    fetchMyBookings();
+    showToast(`Welcome back, ${currentUser.name.split(' ')[0]}! 💄`, 'success');
+}
+
+function logoutUser() {
+    sessionStorage.removeItem('glowUser');
+    currentUser = null;
+    document.getElementById('phone-gate').classList.remove('hidden');
+    document.getElementById('user-chip').classList.add('hidden');
+    document.getElementById('user-chip').classList.remove('flex');
+    document.getElementById('gate-phone').value = '';
+    document.getElementById('gate-name').value = '';
+    document.getElementById('gate-email').value = '';
+    showPhoneStep();
+    document.getElementById('hero-heading').innerHTML =
+        `Unveil Your Inner <span class="gold-gradient-text italic">Radiance & Elegance</span>`;
+    document.getElementById('my-bookings-list').innerHTML =
+        `<div class="text-xs text-roseGold-200/50 text-center py-8">Sign in with your phone to view your bookings.</div>`;
+}
+
+// ── SERVICES ─────────────────────────────────────────────────────
+async function fetchServices() {
+    try {
+        servicesData = await apiFetch('/api/services');
+    } catch { showToast('Could not load services', 'error'); }
+    renderServicesGrid(servicesData);
+    renderBookingOptions();
+}
+
+function filterServices(category, btn) {
+    document.querySelectorAll('.service-tab-btn').forEach(b => {
+        b.classList.remove('bg-roseGold-600', 'text-white');
+        b.classList.add('glass-card', 'text-roseGold-200');
+    });
+    btn.classList.remove('glass-card', 'text-roseGold-200');
+    btn.classList.add('bg-roseGold-600', 'text-white');
+    renderServicesGrid(category === 'all' ? servicesData : servicesData.filter(s => s.category === category));
+}
+
+function renderServicesGrid(list) {
+    const container = document.getElementById('services-grid');
+    if (!list.length) { container.innerHTML = `<div class="col-span-3 text-center py-12 text-roseGold-200/50">No services found.</div>`; return; }
+    container.innerHTML = list.map(s => `
+        <div class="glass-card rounded-3xl overflow-hidden glass-card-hover transition-all flex flex-col justify-between">
+            <div>
+                <div class="relative h-48 overflow-hidden">
+                    <img src="${s.img}" alt="${s.title}" class="w-full h-full object-cover">
+                    <span class="absolute top-3 right-3 bg-charcoal/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-roseGold-300 border border-roseGold-500/20">$${s.price}</span>
+                </div>
+                <div class="p-5 space-y-2">
+                    <div class="text-[11px] font-semibold text-roseGold-400 uppercase tracking-wider"><i class="fa-regular fa-clock mr-1"></i>${s.duration}</div>
+                    <h3 class="font-serif text-lg font-bold text-white">${s.title}</h3>
+                    <p class="text-xs text-roseGold-200/70 font-light">${s.desc}</p>
+                </div>
+            </div>
+            <div class="p-5 pt-0">
+                <button onclick="quickBookService('${s.id}')" class="w-full py-2.5 rounded-xl bg-charcoalLight hover:bg-roseGold-600 border border-roseGold-500/30 text-roseGold-200 hover:text-white font-semibold text-xs transition-all uppercase tracking-wider">
+                    Book This Service
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function quickBookService(serviceId) {
+    currentBookingState.serviceId = serviceId;
+    renderBookingOptions();
+    window.location.hash = '#booking';
+}
+
+// ── BOOKING WIZARD ───────────────────────────────────────────────
+function nextBookingStep(stepNum) {
+    if (stepNum === 2 && !currentBookingState.serviceId) { showToast('Please select a service first', 'error'); return; }
+    if (stepNum === 3) {
+        if (!currentBookingState.stylistId) { showToast('Please select a stylist', 'error'); return; }
+        if (!currentBookingState.date || !currentBookingState.timeSlot) { showToast('Please select date and time slot', 'error'); return; }
+        updateBookingSummary();
+    }
+    document.querySelectorAll('.booking-step').forEach(el => el.classList.add('hidden'));
+    document.getElementById(`booking-step-${stepNum}`).classList.remove('hidden');
+    for (let i = 1; i <= 3; i++) {
+        document.getElementById(`step-indicator-${i}`).className =
+            `h-1.5 rounded-full transition-all ${i <= stepNum ? 'bg-roseGold-500' : 'bg-charcoalLight'}`;
+    }
+}
+
+function prevBookingStep(stepNum) {
+    document.querySelectorAll('.booking-step').forEach(el => el.classList.add('hidden'));
+    document.getElementById(`booking-step-${stepNum}`).classList.remove('hidden');
+}
+
+function renderBookingOptions() {
+    document.getElementById('booking-service-options').innerHTML = servicesData.map(s => `
+        <label class="glass-card p-3.5 rounded-2xl cursor-pointer flex items-center justify-between border ${currentBookingState.serviceId === s.id ? 'border-roseGold-500 bg-roseGold-900/20' : 'border-roseGold-500/20'} hover:border-roseGold-400 transition-all">
+            <div class="flex items-center gap-3">
+                <input type="radio" name="booking-srv" value="${s.id}" ${currentBookingState.serviceId === s.id ? 'checked' : ''} onchange="currentBookingState.serviceId='${s.id}'" class="accent-roseGold-500">
+                <div><div class="text-xs font-bold text-white">${s.title}</div><div class="text-[10px] text-roseGold-200/60">${s.duration}</div></div>
+            </div>
+            <span class="text-xs font-semibold text-roseGold-300">$${s.price}</span>
+        </label>
+    `).join('');
+
+    document.getElementById('booking-stylist-options').innerHTML = stylistsData.map(st => `
+        <label class="glass-card p-4 rounded-2xl cursor-pointer text-center border ${currentBookingState.stylistId === st.id ? 'border-roseGold-500 bg-roseGold-900/20' : 'border-roseGold-500/20'} hover:border-roseGold-400 transition-all block">
+            <input type="radio" name="booking-stylist" value="${st.id}" ${currentBookingState.stylistId === st.id ? 'checked' : ''} onchange="currentBookingState.stylistId='${st.id}'" class="hidden">
+            <img src="${st.img}" class="w-16 h-16 rounded-full mx-auto mb-2 object-cover border-2 border-roseGold-400/50">
+            <div class="text-xs font-bold text-white">${st.name}</div>
+            <div class="text-[10px] text-roseGold-200/60">${st.title}</div>
+            <span class="inline-block mt-2 px-2 py-0.5 rounded-md bg-roseGold-500/10 text-[10px] text-accentGold font-medium">${st.rating}</span>
+        </label>
+    `).join('');
+}
+
+function renderTimeSlots() {
+    currentBookingState.date = document.getElementById('booking-date').value;
+    const slots = ['09:00 AM','10:30 AM','12:00 PM','01:30 PM','03:00 PM','04:30 PM'];
+    document.getElementById('time-slots-grid').innerHTML = slots.map(slot => `
+        <button type="button" onclick="selectTimeSlot('${slot}')" class="px-3 py-2 rounded-xl text-xs font-medium glass-card border transition-all text-center ${currentBookingState.timeSlot === slot ? 'bg-roseGold-600 text-white border-roseGold-500' : 'border-roseGold-500/20 hover:border-roseGold-400 text-roseGold-200'}">
+            ${slot}
+        </button>
+    `).join('');
+}
+
+function selectTimeSlot(slot) {
+    currentBookingState.timeSlot = slot;
+    document.getElementById('booking-time-slot').value = slot;
+    renderTimeSlots();
+}
+
+function updateBookingSummary() {
+    const s  = servicesData.find(x => x.id === currentBookingState.serviceId);
+    const st = stylistsData.find(x => x.id === currentBookingState.stylistId);
+    document.getElementById('booking-summary-box').innerHTML = `
+        <div class="flex justify-between font-bold text-white border-b border-roseGold-500/10 pb-2 mb-2">
+            <span>${s?.title}</span><span class="text-roseGold-300">$${s?.price}</span>
+        </div>
+        <div class="grid grid-cols-2 gap-1 text-[11px] text-roseGold-200/80">
+            <div><i class="fa-solid fa-circle-user text-roseGold-400 mr-1"></i>${currentUser?.name}</div>
+            <div><i class="fa-solid fa-user-scissors text-roseGold-400 mr-1"></i>${st?.name}</div>
+            <div><i class="fa-regular fa-calendar text-roseGold-400 mr-1"></i>${currentBookingState.date}</div>
+            <div><i class="fa-regular fa-clock text-roseGold-400 mr-1"></i>${currentBookingState.timeSlot}</div>
+            <div><i class="fa-solid fa-phone text-roseGold-400 mr-1"></i>${currentUser?.phone}</div>
+            <div><i class="fa-solid fa-tag text-roseGold-400 mr-1"></i>${s?.duration}</div>
+        </div>`;
+}
+
+async function handleBookingSubmit(e) {
+    e.preventDefault();
+    if (!currentUser) { showToast('Please sign in first', 'error'); return; }
+    const s  = servicesData.find(x => x.id === currentBookingState.serviceId);
+    const st = stylistsData.find(x => x.id === currentBookingState.stylistId);
+    const btn = document.getElementById('booking-submit-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> Booking…';
+
+    try {
+        const booking = await apiFetch('/api/bookings', {
+            method: 'POST',
+            body: JSON.stringify({
+                phone: currentUser.phone,
+                service_title: s.title,
+                price: s.price,
+                stylist_name: st.name,
+                date: currentBookingState.date,
+                time_slot: currentBookingState.timeSlot,
+                notes: document.getElementById('client-notes').value || null,
+            }),
+        });
+        showToast(`Booking Confirmed! Ref: ${booking.ref_id}`, 'success');
+        document.getElementById('booking-form').reset();
+        currentBookingState = { serviceId: '', stylistId: '', date: '', timeSlot: '' };
+        renderBookingOptions();
+        nextBookingStep(1);
+        await fetchMyBookings();
+        window.location.hash = '#my-bookings';
+    } catch (err) {
+        showToast(`Booking failed: ${err.message}`, 'error');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-check-circle mr-1.5"></i> Confirm & Book Now';
+    }
+}
+
+// ── MY BOOKINGS ───────────────────────────────────────────────────
+async function fetchMyBookings() {
+    if (!currentUser) return;
+    const container = document.getElementById('my-bookings-list');
+    document.getElementById('my-bookings-subtitle').textContent = `Bookings for ${currentUser.name} · ${currentUser.phone}`;
+    container.innerHTML = `<div class="text-xs text-roseGold-200/50 text-center py-6">Loading…</div>`;
+
+    try {
+        const bookings = await apiFetch(`/api/bookings/mine?phone=${encodeURIComponent(currentUser.phone)}`);
+        if (!bookings.length) {
+            container.innerHTML = `<div class="text-xs text-roseGold-200/50 text-center py-8">No bookings yet. <a href="#booking" class="text-roseGold-400 underline">Book your first appointment!</a></div>`;
+            return;
         }
+        const statusColor = {
+            Confirmed: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+            Pending:   'bg-amber-500/10 text-amber-400 border-amber-500/30',
+            Completed: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
+            Cancelled: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
+        };
+        container.innerHTML = bookings.map(b => `
+            <div class="glass-card p-4 rounded-2xl border border-roseGold-500/20 flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="font-mono text-xs font-bold text-roseGold-300">${b.ref_id}</span>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold border ${statusColor[b.status] || ''}">${b.status}</span>
+                    </div>
+                    <div class="text-xs font-bold text-white">${b.service_title} <span class="text-roseGold-400 font-normal">with ${b.stylist_name}</span></div>
+                    <div class="text-[11px] text-roseGold-200/60 mt-0.5"><i class="fa-regular fa-calendar mr-1"></i>${b.date} at ${b.time_slot}</div>
+                    ${b.notes ? `<div class="text-[10px] text-roseGold-200/40 mt-0.5"><i class="fa-regular fa-note-sticky mr-1"></i>${b.notes}</div>` : ''}
+                </div>
+                <div class="text-right shrink-0">
+                    <div class="text-lg font-bold text-roseGold-300">$${b.price}</div>
+                </div>
+            </div>
+        `).join('');
+    } catch (err) {
+        container.innerHTML = `<div class="text-xs text-rose-400 text-center py-6">Error loading bookings: ${err.message}</div>`;
+    }
+}
 
-        async function deleteBookingEntry(refId) {
-            try {
-                await apiFetch(`/api/bookings/${refId}`, { method: 'DELETE' });
-                showToast(`Deleted booking ${refId}`, 'error');
-                await refreshAdminView();
-            } catch (err) {
-                showToast(`Delete failed: ${err.message}`, 'error');
-            }
-        }
+// ── REVIEWS ──────────────────────────────────────────────────────
+async function fetchReviews() {
+    try {
+        const reviews = await apiFetch('/api/reviews');
+        renderReviewsList(reviews);
+    } catch {
+        document.getElementById('reviews-list-container').innerHTML = `<div class="text-xs text-roseGold-200/50 p-4">Could not load reviews.</div>`;
+    }
+}
 
-        function openAddServiceModal() {
-            document.getElementById('add-service-modal').classList.remove('hidden');
-            document.getElementById('add-service-modal').classList.add('flex');
-        }
+async function handleReviewSubmit(e) {
+    e.preventDefault();
+    try {
+        await apiFetch('/api/reviews', {
+            method: 'POST',
+            body: JSON.stringify({
+                name: document.getElementById('rev-name').value,
+                rating: parseInt(document.getElementById('rev-stars').value),
+                comment: document.getElementById('rev-comment').value,
+            }),
+        });
+        showToast('Thank you for your feedback!', 'success');
+        e.target.reset();
+        await fetchReviews();
+    } catch (err) {
+        showToast(`Review failed: ${err.message}`, 'error');
+    }
+}
 
-        function closeAddServiceModal() {
-            document.getElementById('add-service-modal').classList.add('hidden');
-            document.getElementById('add-service-modal').classList.remove('flex');
-        }
+function renderReviewsList(reviews) {
+    const container = document.getElementById('reviews-list-container');
+    if (!reviews.length) { container.innerHTML = `<div class="text-xs text-roseGold-200/50 p-4">No reviews yet.</div>`; return; }
+    container.innerHTML = reviews.map(r => {
+        const d = r.created_at ? new Date(r.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '';
+        return `<div class="glass-card p-5 rounded-2xl border border-roseGold-500/15 space-y-1.5">
+            <div class="flex justify-between items-center"><span class="text-xs font-bold text-white">${r.name}</span><span class="text-xs text-accentGold">${'⭐'.repeat(r.rating)}</span></div>
+            <p class="text-xs text-roseGold-100/80 font-light">"${r.comment}"</p>
+            <div class="text-[10px] text-roseGold-200/40">${d}</div>
+        </div>`;
+    }).join('');
+}
 
-        async function handleAddNewService(e) {
-            e.preventDefault();
-            try {
-                await apiFetch('/api/services', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        category: document.getElementById('new-srv-category').value,
-                        title: document.getElementById('new-srv-title').value,
-                        price: parseFloat(document.getElementById('new-srv-price').value),
-                        duration: document.getElementById('new-srv-duration').value,
-                        desc: document.getElementById('new-srv-desc').value,
-                    }),
-                });
-                showToast(`New service added!`, 'success');
-                closeAddServiceModal();
-                await fetchServices();
-            } catch (err) {
-                showToast(`Add service failed: ${err.message}`, 'error');
-            }
-        }
-
-        // ==========================================
-        // UI TABS
-        // ==========================================
-        function switchMainTab(tab) {
-            ['client', 'admin', 'backend'].forEach(t => {
-                document.getElementById(`view-${t}`).classList.add('hidden');
-                document.getElementById(`btn-tab-${t}`).className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-roseGold-200 hover:text-white transition-all";
-            });
-            document.getElementById(`view-${tab}`).classList.remove('hidden');
-            document.getElementById(`btn-tab-${tab}`).className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-roseGold-600 text-white shadow-md transition-all";
-
-            if (tab === 'admin') refreshAdminView();
-            if (tab === 'backend') checkServerStatus();
-        }
-
-        // ==========================================
-        // BACKEND CODE VIEWER & LIVE API TESTER
-        // ==========================================
-        function switchBackendSubTab(key) {
-            document.querySelectorAll('.subtab-btn').forEach(btn => {
-                btn.className = "subtab-btn px-4 py-2.5 rounded-t-xl text-xs font-semibold text-roseGold-200 hover:text-white transition-all flex items-center gap-1.5";
-            });
-            document.getElementById(`subtab-${key}`).className = "subtab-btn px-4 py-2.5 rounded-t-xl text-xs font-semibold bg-roseGold-600 text-white transition-all flex items-center gap-1.5";
-
-            if (key === 'api-tester') {
-                document.getElementById('backend-subtab-content-api-tester').classList.remove('hidden');
-                document.getElementById('backend-code-viewer-container').classList.add('hidden');
-            } else {
-                document.getElementById('backend-subtab-content-api-tester').classList.add('hidden');
-                document.getElementById('backend-code-viewer-container').classList.remove('hidden');
-                document.getElementById('code-display-area').innerText = backendCodeFiles[key];
-            }
-        }
-
-        function updateApiTesterForm() {
-            const endpoint = document.getElementById('api-tester-endpoint').value;
-            document.getElementById('api-tester-id-container').classList.add('hidden');
-            document.getElementById('api-tester-status-container').classList.add('hidden');
-            document.getElementById('api-tester-body-container').classList.add('hidden');
-            document.getElementById('api-tester-no-body').classList.remove('hidden');
-
-            if (endpoint === 'POST_BOOKING') {
-                document.getElementById('api-tester-body-container').classList.remove('hidden');
-                document.getElementById('api-tester-no-body').classList.add('hidden');
-                document.getElementById('api-tester-json-body').value = JSON.stringify({
-                    client_name: "Genevieve Noir",
-                    client_email: "genevieve@beauty.com",
-                    client_phone: "+1 (555) 987-6543",
-                    service_title: "Hydra-Glow Diamond Facial",
-                    price: 145,
-                    stylist_name: "Camila Rodriguez",
-                    date: "2026-10-25",
-                    time_slot: "02:00 PM"
-                }, null, 2);
-            } else if (endpoint === 'PATCH_STATUS') {
-                document.getElementById('api-tester-id-container').classList.remove('hidden');
-                document.getElementById('api-tester-status-container').classList.remove('hidden');
-                document.getElementById('api-tester-no-body').classList.add('hidden');
-            } else if (endpoint === 'DELETE_BOOKING') {
-                document.getElementById('api-tester-id-container').classList.remove('hidden');
-                document.getElementById('api-tester-no-body').classList.add('hidden');
-            }
-        }
-
-        async function executeApiRequest() {
-            const endpoint = document.getElementById('api-tester-endpoint').value;
-            const outputArea = document.getElementById('api-tester-response-output');
-            const statusBadge = document.getElementById('api-tester-response-status');
-            const timeBadge = document.getElementById('api-response-time');
-
-            const start = performance.now();
-            outputArea.innerText = 'Sending request…';
-
-            const setStatus = (code, ok) => {
-                statusBadge.innerText = code;
-                statusBadge.className = ok
-                    ? "text-xs font-mono px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"
-                    : "text-xs font-mono px-2.5 py-1 rounded-md bg-rose-500/10 text-rose-400 border border-rose-500/30";
-            };
-
-            try {
-                let url, method = 'GET', body;
-                const refId = document.getElementById('api-tester-ref-id')?.value;
-
-                if (endpoint === 'GET_ALL')       url = '/api/bookings';
-                else if (endpoint === 'GET_STATS') url = '/api/bookings/stats';
-                else if (endpoint === 'GET_SERVICES') url = '/api/services';
-                else if (endpoint === 'GET_REVIEWS')  url = '/api/reviews';
-                else if (endpoint === 'POST_BOOKING') {
-                    url = '/api/bookings'; method = 'POST';
-                    body = document.getElementById('api-tester-json-body').value;
-                } else if (endpoint === 'PATCH_STATUS') {
-                    url = `/api/bookings/${refId}/status`; method = 'PATCH';
-                    body = JSON.stringify({ status: document.getElementById('api-tester-status-value').value });
-                } else if (endpoint === 'DELETE_BOOKING') {
-                    url = `/api/bookings/${refId}`; method = 'DELETE';
-                }
-
-                const res = await fetch(`${API_BASE}${url}`, {
-                    method,
-                    headers: { 'Content-Type': 'application/json' },
-                    ...(body ? { body } : {}),
-                });
-                const elapsed = Math.round(performance.now() - start);
-                timeBadge.innerText = `${elapsed}ms`;
-                const data = await res.json();
-                setStatus(`HTTP ${res.status} ${res.ok ? 'OK' : 'Error'}`, res.ok);
-                outputArea.innerText = JSON.stringify(data, null, 2);
-
-                // Refresh admin if mutation
-                if (['POST_BOOKING', 'PATCH_STATUS', 'DELETE_BOOKING'].includes(endpoint)) {
-                    await fetchAdminStats();
-                }
-            } catch (err) {
-                const elapsed = Math.round(performance.now() - start);
-                timeBadge.innerText = `${elapsed}ms`;
-                setStatus('Network Error', false);
-                outputArea.innerText = JSON.stringify({ error: err.message, hint: 'Make sure the FastAPI server is running on localhost:8000' }, null, 2);
-            }
-        }
-
-        function copyCurrentCode() {
-            navigator.clipboard.writeText(document.getElementById('code-display-area').innerText)
-                .then(() => showToast("Source code copied to clipboard!", "success"))
-                .catch(() => showToast("Copy failed", "error"));
-        }
-
-        // ==========================================
-        // TOAST NOTIFICATIONS
-        // ==========================================
-        function showToast(msg, type = "info") {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            const colorClass = type === 'success' ? 'border-emerald-500 text-emerald-300' :
-                               type === 'error'   ? 'border-roseGold-500 text-roseGold-300' :
-                                                    'border-blue-500 text-blue-300';
-            toast.className = `glass-card p-3.5 rounded-xl border ${colorClass} text-xs font-medium shadow-2xl flex items-center gap-2 transition-all duration-300`;
-            toast.innerHTML = `<i class="fa-solid fa-circle-info"></i> ${msg}`;
-            container.appendChild(toast);
-            setTimeout(() => { toast.classList.add('opacity-0'); setTimeout(() => toast.remove(), 300); }, 3500);
-        }
-    </script>
+// ── TOAST ─────────────────────────────────────────────────────────
+function showToast(msg, type = 'info') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    const color = type === 'success' ? 'border-emerald-500 text-emerald-300' : type === 'error' ? 'border-roseGold-500 text-roseGold-300' : 'border-blue-500 text-blue-300';
+    toast.className = `glass-card p-3.5 rounded-xl border ${color} text-xs font-medium shadow-2xl flex items-center gap-2 transition-all duration-300`;
+    toast.innerHTML = `<i class="fa-solid fa-circle-info"></i> ${msg}`;
+    container.appendChild(toast);
+    setTimeout(() => { toast.classList.add('opacity-0'); setTimeout(() => toast.remove(), 300); }, 3500);
+}
+</script>
 </body>
 </html>

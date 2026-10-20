@@ -4,12 +4,40 @@ from datetime import datetime
 from models import BookingStatus, ServiceCategory
 
 
+# ── User Schemas ─────────────────────────────────────────────────
+
+class UserIdentify(BaseModel):
+    phone: str
+    name: Optional[str] = None
+    email: Optional[str] = None
+
+
+class UserOut(BaseModel):
+    id: int
+    phone: str
+    name: str
+    email: Optional[str] = None
+    created_at: Optional[datetime] = None
+
+    model_config = {"from_attributes": True}
+
+
+# ── Auth Schemas ──────────────────────────────────────────────────
+
+class AdminLogin(BaseModel):
+    username: str
+    password: str
+
+
+class TokenOut(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+
+
 # ── Booking Schemas ──────────────────────────────────────────────
 
 class BookingCreate(BaseModel):
-    client_name: str
-    client_email: str
-    client_phone: str
+    phone: str
     service_title: str
     price: float
     stylist_name: str
@@ -24,8 +52,9 @@ class BookingStatusUpdate(BaseModel):
 
 class BookingOut(BaseModel):
     ref_id: str
+    user_id: Optional[int] = None
     client_name: str
-    client_email: str
+    client_email: Optional[str] = None
     client_phone: str
     service_title: str
     price: float

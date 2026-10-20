@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace | Manager Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        roseGold: { 50:'#fff7f8',100:'#ffedf0',200:'#ffd0d8',300:'#fba5b4',400:'#f66e86',500:'#e83e5f',600:'#d12447',700:'#b01937',800:'#921832',900:'#7b192e' },
+                        charcoal: '#181617', charcoalLight: '#242123', champagne: '#f7ede2', accentGold: '#d4af37'
+                    },
+                    fontFamily: { sans: ['Inter','sans-serif'], serif: ['Playfair Display','serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #181617; color: #f7ede2; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .glass-card { background: rgba(36,33,35,0.7); backdrop-filter: blur(12px); border: 1px solid rgba(228,170,180,0.15); }
+        .gold-gradient-text { background: linear-gradient(135deg,#fba5b4 0%,#e83e5f 50%,#d4af37 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .custom-scrollbar::-webkit-scrollbar { width:6px; height:6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background:#181617; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background:#f66e86; border-radius:3px; }
+    </style>
+</head>
+<body class="bg-charcoal text-champagne min-h-screen selection:bg-roseGold-500 selection:text-white">
+
+<!-- TOAST -->
+<div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 max-w-sm"></div>
+
+<!-- ================================================ -->
+<!-- LOGIN SCREEN                                      -->
+<!-- ================================================ -->
+<div id="login-screen" class="min-h-screen flex items-center justify-center p-4">
+    <div class="glass-card rounded-3xl p-8 max-w-sm w-full border border-roseGold-500/30 space-y-6">
+        <div class="text-center">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-roseGold-600 to-accentGold flex items-center justify-center text-white font-serif font-bold text-3xl shadow-lg mx-auto mb-4">G</div>
+            <h2 class="font-serif text-2xl font-bold text-white">Manager Login</h2>
+            <p class="text-xs text-roseGold-200/60 mt-1">Glow & Grace — Admin Portal</p>
+        </div>
+        <form onsubmit="handleLogin(event)" class="space-y-4">
+            <div>
+                <label class="block text-xs font-medium text-roseGold-200 mb-1.5">Username</label>
+                <input type="text" id="login-username" required placeholder="admin"
+                    class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-roseGold-400 placeholder-roseGold-200/30">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-roseGold-200 mb-1.5">Password</label>
+                <div class="relative">
+                    <input type="password" id="login-password" required placeholder="••••••••"
+                        class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-roseGold-400 placeholder-roseGold-200/30 pr-10">
+                    <button type="button" onclick="togglePassword()" class="absolute right-3 top-3 text-roseGold-200/50 hover:text-roseGold-300">
+                        <i id="pw-eye" class="fa-regular fa-eye text-sm"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="login-error" class="hidden text-xs text-rose-400 bg-rose-500/10 border border-rose-500/20 rounded-xl p-3 text-center"></div>
+            <button type="submit" id="login-btn" class="w-full py-3 rounded-xl bg-gradient-to-r from-roseGold-500 to-roseGold-700 text-white font-semibold text-sm uppercase tracking-wider shadow-lg hover:scale-[1.01] transition-all">
+                <i class="fa-solid fa-right-to-bracket mr-2"></i> Sign In
+            </button>
+        </form>
+        <p class="text-center text-[11px] text-roseGold-200/40">
+            <a href="index.html" class="hover:text-roseGold-300 transition-colors"><i class="fa-solid fa-arrow-left mr-1"></i>Back to client site</a>
+        </p>
+    </div>
+</div>
+
+<!-- ================================================ -->
+<!-- DASHBOARD (hidden until logged in)               -->
+<!-- ================================================ -->
+<div id="dashboard-screen" class="hidden min-h-screen flex flex-col">
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 glass-card border-b border-roseGold-500/20 px-4 lg:px-8 py-3.5">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-roseGold-600 to-accentGold flex items-center justify-center text-white font-serif font-bold text-lg shadow-lg">G</div>
+                <div>
+                    <span class="font-serif text-lg font-bold tracking-wide gold-gradient-text">GLOW & GRACE</span>
+                    <span class="block text-[10px] uppercase tracking-widest text-roseGold-300 -mt-1">Manager Dashboard</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="text-xs text-roseGold-200/60 hidden sm:block"><i class="fa-solid fa-user-shield text-roseGold-400 mr-1"></i>Admin</span>
+                <a href="index.html" class="px-3 py-1.5 rounded-lg glass-card text-roseGold-200 text-xs border border-roseGold-500/20 hover:text-white transition-all">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Client Site
+                </a>
+                <button onclick="handleLogout()" class="px-3 py-1.5 rounded-lg bg-roseGold-600/20 border border-roseGold-500/30 text-roseGold-300 text-xs hover:bg-roseGold-600 hover:text-white transition-all">
+                    <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 py-8 space-y-8">
+
+        <!-- BANNER -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-card p-6 rounded-3xl border border-roseGold-500/30">
+            <div>
+                <span class="text-xs uppercase font-bold text-roseGold-400 tracking-wider">Management Control Panel</span>
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white mt-0.5">Salon Manager Dashboard</h2>
+                <p class="text-xs text-roseGold-200/60 mt-0.5">Real-time scheduling, revenue analytics, and client management.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="refreshDashboard()" class="px-4 py-2 rounded-xl bg-charcoalLight text-roseGold-300 text-xs font-semibold border border-roseGold-500/30 hover:bg-roseGold-900/30 transition-all">
+                    <i class="fa-solid fa-arrows-rotate mr-1.5"></i>Refresh
+                </button>
+                <button onclick="openAddServiceModal()" class="px-4 py-2 rounded-xl bg-roseGold-600 text-white text-xs font-semibold hover:bg-roseGold-500 transition-all">
+                    <i class="fa-solid fa-plus mr-1.5"></i>Add Service
+                </button>
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div class="glass-card p-5 rounded-2xl border border-roseGold-500/20">
+                <div class="flex justify-between items-start mb-2"><span class="text-xs font-semibold text-roseGold-300">Total Revenue</span><div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-sm"><i class="fa-solid fa-dollar-sign"></i></div></div>
+                <div class="text-2xl font-bold text-white" id="stat-revenue">—</div>
+                <span class="text-[10px] text-emerald-400">From confirmed bookings</span>
+            </div>
+            <div class="glass-card p-5 rounded-2xl border border-roseGold-500/20">
+                <div class="flex justify-between items-start mb-2"><span class="text-xs font-semibold text-roseGold-300">Total Bookings</span><div class="w-8 h-8 rounded-lg bg-roseGold-500/10 text-roseGold-400 flex items-center justify-center text-sm"><i class="fa-solid fa-calendar-check"></i></div></div>
+                <div class="text-2xl font-bold text-white" id="stat-total-bookings">—</div>
+                <span class="text-[10px] text-roseGold-300/80">All appointments</span>
+            </div>
+            <div class="glass-card p-5 rounded-2xl border border-roseGold-500/20">
+                <div class="flex justify-between items-start mb-2"><span class="text-xs font-semibold text-roseGold-300">Pending</span><div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-sm"><i class="fa-solid fa-clock"></i></div></div>
+                <div class="text-2xl font-bold text-amber-300" id="stat-pending">—</div>
+                <span class="text-[10px] text-amber-400/80">Needs confirmation</span>
+            </div>
+            <div class="glass-card p-5 rounded-2xl border border-roseGold-500/20">
+                <div class="flex justify-between items-start mb-2"><span class="text-xs font-semibold text-roseGold-300">Total Users</span><div class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center text-sm"><i class="fa-solid fa-users"></i></div></div>
+                <div class="text-2xl font-bold text-white" id="stat-total-users">—</div>
+                <span class="text-[10px] text-blue-300/80">Registered clients</span>
+            </div>
+            <div class="glass-card p-5 rounded-2xl border border-roseGold-500/20">
+                <div class="flex justify-between items-start mb-2"><span class="text-xs font-semibold text-roseGold-300">Top Service</span><div class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center text-sm"><i class="fa-solid fa-crown"></i></div></div>
+                <div class="text-sm font-bold text-white truncate" id="stat-top-service">—</div>
+                <span class="text-[10px] text-purple-300/80">Most requested</span>
+            </div>
+        </div>
+
+        <!-- BOOKINGS TABLE -->
+        <div class="glass-card rounded-3xl p-6 border border-roseGold-500/20">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                <div>
+                    <h3 class="font-serif text-xl font-bold text-white">Appointments</h3>
+                    <p class="text-xs text-roseGold-200/60">Filter and update booking statuses in real time.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <label class="text-xs text-roseGold-200">Filter:</label>
+                    <select id="admin-filter-status" onchange="fetchAdminBookings()" class="bg-charcoal border border-roseGold-500/30 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none">
+                        <option value="ALL">All Statuses</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+            </div>
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-charcoalLight/80 text-roseGold-300 uppercase tracking-wider font-semibold border-b border-roseGold-500/20">
+                        <tr>
+                            <th class="p-3.5">Ref ID</th>
+                            <th class="p-3.5">Client</th>
+                            <th class="p-3.5">Service & Stylist</th>
+                            <th class="p-3.5">Date & Time</th>
+                            <th class="p-3.5">Price</th>
+                            <th class="p-3.5">Status</th>
+                            <th class="p-3.5 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-bookings-tbody" class="divide-y divide-roseGold-500/10">
+                        <tr><td colspan="7" class="p-6 text-center text-roseGold-200/60">Loading…</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SERVICES TABLE -->
+        <div class="glass-card rounded-3xl p-6 border border-roseGold-500/20">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h3 class="font-serif text-xl font-bold text-white">Services</h3>
+                    <p class="text-xs text-roseGold-200/60">Manage salon service offerings.</p>
+                </div>
+            </div>
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-charcoalLight/80 text-roseGold-300 uppercase tracking-wider font-semibold border-b border-roseGold-500/20">
+                        <tr>
+                            <th class="p-3.5">Title</th>
+                            <th class="p-3.5">Category</th>
+                            <th class="p-3.5">Duration</th>
+                            <th class="p-3.5">Price</th>
+                            <th class="p-3.5 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-services-tbody" class="divide-y divide-roseGold-500/10">
+                        <tr><td colspan="5" class="p-6 text-center text-roseGold-200/60">Loading…</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- ADD SERVICE MODAL -->
+<div id="add-service-modal" class="fixed inset-0 z-50 bg-charcoal/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="glass-card p-6 rounded-3xl max-w-md w-full border border-roseGold-500/30 space-y-4">
+        <div class="flex items-center justify-between">
+            <h3 class="font-serif text-xl font-bold text-white">Add New Service</h3>
+            <button onclick="closeAddServiceModal()" class="text-roseGold-200 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+        </div>
+        <form onsubmit="handleAddNewService(event)" class="space-y-3">
+            <div>
+                <label class="block text-xs font-medium text-roseGold-200 mb-1">Service Title</label>
+                <input type="text" id="new-srv-title" required placeholder="e.g. Keratin Therapy" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2.5 text-xs text-white">
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="block text-xs font-medium text-roseGold-200 mb-1">Category</label>
+                    <select id="new-srv-category" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2.5 text-xs text-white">
+                        <option value="hair">Hair Care</option>
+                        <option value="skin">Skin & Facial</option>
+                        <option value="nails">Nails & Spa</option>
+                        <option value="bridal">Bridal & Glam</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-roseGold-200 mb-1">Price ($)</label>
+                    <input type="number" id="new-srv-price" required placeholder="120" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2.5 text-xs text-white">
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-roseGold-200 mb-1">Duration</label>
+                <input type="text" id="new-srv-duration" required placeholder="60 mins" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2.5 text-xs text-white">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-roseGold-200 mb-1">Description</label>
+                <input type="text" id="new-srv-desc" required placeholder="Short description" class="w-full bg-charcoal border border-roseGold-500/30 rounded-xl p-2.5 text-xs text-white">
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button type="button" onclick="closeAddServiceModal()" class="px-4 py-2 rounded-xl glass-card text-xs text-roseGold-200">Cancel</button>
+                <button type="submit" class="px-5 py-2 rounded-xl bg-roseGold-600 text-white text-xs font-semibold">Save Service</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+const API_BASE = 'http://localhost:8000';
+let adminToken = null;
+
+// ── API HELPER ────────────────────────────────────────────────────
+async function apiFetch(path, options = {}) {
+    const headers = { 'Content-Type': 'application/json', ...options.headers };
+    if (adminToken) headers['Authorization'] = `Bearer ${adminToken}`;
+    const res = await fetch(`${API_BASE}${path}`, { ...options, headers });
+    if (res.status === 401) { handleLogout(); throw new Error('Session expired. Please log in again.'); }
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || `HTTP ${res.status}`);
+    }
+    return res.json();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────
+window.onload = function () {
+    const saved = localStorage.getItem('adminToken');
+    if (saved) {
+        adminToken = saved;
+        showDashboard();
+    }
+};
+
+// ── AUTH ──────────────────────────────────────────────────────────
+async function handleLogin(e) {
+    e.preventDefault();
+    const btn = document.getElementById('login-btn');
+    const errBox = document.getElementById('login-error');
+    errBox.classList.add('hidden');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Signing in…';
+
+    try {
+        const data = await apiFetch('/api/auth/login', {
+            method: 'POST',
+            body: JSON.stringify({
+                username: document.getElementById('login-username').value,
+                password: document.getElementById('login-password').value,
+            }),
+        });
+        adminToken = data.access_token;
+        localStorage.setItem('adminToken', adminToken);
+        showDashboard();
+    } catch (err) {
+        errBox.textContent = err.message;
+        errBox.classList.remove('hidden');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-right-to-bracket mr-2"></i> Sign In';
+    }
+}
+
+function handleLogout() {
+    adminToken = null;
+    localStorage.removeItem('adminToken');
+    document.getElementById('dashboard-screen').classList.add('hidden');
+    document.getElementById('login-screen').classList.remove('hidden');
+    document.getElementById('login-password').value = '';
+    showToast('Logged out successfully', 'info');
+}
+
+function togglePassword() {
+    const input = document.getElementById('login-password');
+    const icon  = document.getElementById('pw-eye');
+    if (input.type === 'password') { input.type = 'text'; icon.className = 'fa-regular fa-eye-slash text-sm'; }
+    else { input.type = 'password'; icon.className = 'fa-regular fa-eye text-sm'; }
+}
+
+function showDashboard() {
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('dashboard-screen').classList.remove('hidden');
+    refreshDashboard();
+}
+
+// ── DASHBOARD DATA ────────────────────────────────────────────────
+async function refreshDashboard() {
+    await Promise.all([fetchAdminStats(), fetchAdminBookings(), fetchAdminServices()]);
+}
+
+async function fetchAdminStats() {
+    try {
+        const s = await apiFetch('/api/bookings/stats');
+        document.getElementById('stat-revenue').textContent        = `$${s.revenue}`;
+        document.getElementById('stat-total-bookings').textContent = s.total_bookings;
+        document.getElementById('stat-pending').textContent        = s.pending;
+        document.getElementById('stat-top-service').textContent    = s.top_service;
+        document.getElementById('stat-total-users').textContent    = s.total_users;
+    } catch (err) { showToast(`Stats error: ${err.message}`, 'error'); }
+}
+
+async function fetchAdminBookings() {
+    const filter = document.getElementById('admin-filter-status').value;
+    const tbody = document.getElementById('admin-bookings-tbody');
+    tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-roseGold-200/60">Loading…</td></tr>`;
+    try {
+        const url = filter === 'ALL' ? '/api/bookings' : `/api/bookings?status=${filter}`;
+        const bookings = await apiFetch(url);
+        renderBookingsTable(bookings);
+    } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-rose-400">${err.message}</td></tr>`;
+    }
+}
+
+function renderBookingsTable(bookings) {
+    const tbody = document.getElementById('admin-bookings-tbody');
+    if (!bookings.length) {
+        tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-roseGold-200/60">No bookings match this filter.</td></tr>`;
+        return;
+    }
+    tbody.innerHTML = bookings.map(b => `
+        <tr class="hover:bg-roseGold-500/5 transition-colors">
+            <td class="p-3.5 font-mono text-roseGold-300 font-bold">${b.ref_id}</td>
+            <td class="p-3.5">
+                <div class="font-semibold text-white">${b.client_name}</div>
+                <div class="text-[10px] text-roseGold-200/60">${b.client_phone}</div>
+            </td>
+            <td class="p-3.5">
+                <div class="text-white">${b.service_title}</div>
+                <div class="text-[10px] text-roseGold-400">${b.stylist_name}</div>
+            </td>
+            <td class="p-3.5 whitespace-nowrap">
+                <div class="text-white">${b.date}</div>
+                <div class="text-[10px] text-roseGold-200/60">${b.time_slot}</div>
+            </td>
+            <td class="p-3.5 font-bold text-roseGold-300">$${b.price}</td>
+            <td class="p-3.5">
+                <select onchange="updateBookingStatus('${b.ref_id}', this.value)"
+                    class="bg-charcoal border border-roseGold-500/30 rounded-lg px-2 py-1 text-[11px] font-medium text-white focus:outline-none">
+                    <option value="Confirmed" ${b.status==='Confirmed'?'selected':''}>Confirmed</option>
+                    <option value="Pending"   ${b.status==='Pending'  ?'selected':''}>Pending</option>
+                    <option value="Completed" ${b.status==='Completed'?'selected':''}>Completed</option>
+                    <option value="Cancelled" ${b.status==='Cancelled'?'selected':''}>Cancelled</option>
+                </select>
+            </td>
+            <td class="p-3.5 text-right">
+                <button onclick="deleteBooking('${b.ref_id}')" class="text-roseGold-400 hover:text-rose-400 p-1 transition-colors">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+async function updateBookingStatus(refId, status) {
+    try {
+        await apiFetch(`/api/bookings/${refId}/status`, {
+            method: 'PATCH',
+            body: JSON.stringify({ status }),
+        });
+        showToast(`${refId} → ${status}`, 'success');
+        await fetchAdminStats();
+    } catch (err) { showToast(`Update failed: ${err.message}`, 'error'); }
+}
+
+async function deleteBooking(refId) {
+    try {
+        await apiFetch(`/api/bookings/${refId}`, { method: 'DELETE' });
+        showToast(`Deleted ${refId}`, 'info');
+        await refreshDashboard();
+    } catch (err) { showToast(`Delete failed: ${err.message}`, 'error'); }
+}
+
+// ── SERVICES ──────────────────────────────────────────────────────
+async function fetchAdminServices() {
+    const tbody = document.getElementById('admin-services-tbody');
+    try {
+        const services = await apiFetch('/api/services');
+        if (!services.length) {
+            tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-roseGold-200/60">No services found.</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = services.map(s => `
+            <tr class="hover:bg-roseGold-500/5 transition-colors">
+                <td class="p-3.5 font-semibold text-white">${s.title}</td>
+                <td class="p-3.5"><span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-roseGold-500/10 text-roseGold-300 border border-roseGold-500/20 capitalize">${s.category}</span></td>
+                <td class="p-3.5 text-roseGold-200/70">${s.duration}</td>
+                <td class="p-3.5 font-bold text-roseGold-300">$${s.price}</td>
+                <td class="p-3.5 text-right">
+                    <button onclick="deleteService('${s.id}')" class="text-roseGold-400 hover:text-rose-400 p-1 transition-colors">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+    } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-rose-400">${err.message}</td></tr>`;
+    }
+}
+
+async function deleteService(id) {
+    try {
+        await apiFetch(`/api/services/${id}`, { method: 'DELETE' });
+        showToast('Service deleted', 'info');
+        await fetchAdminServices();
+    } catch (err) { showToast(`Delete failed: ${err.message}`, 'error'); }
+}
+
+function openAddServiceModal() {
+    document.getElementById('add-service-modal').classList.remove('hidden');
+    document.getElementById('add-service-modal').classList.add('flex');
+}
+
+function closeAddServiceModal() {
+    document.getElementById('add-service-modal').classList.add('hidden');
+    document.getElementById('add-service-modal').classList.remove('flex');
+}
+
+async function handleAddNewService(e) {
+    e.preventDefault();
+    try {
+        await apiFetch('/api/services', {
+            method: 'POST',
+            body: JSON.stringify({
+                category: document.getElementById('new-srv-category').value,
+                title:    document.getElementById('new-srv-title').value,
+                price:    parseFloat(document.getElementById('new-srv-price').value),
+                duration: document.getElementById('new-srv-duration').value,
+                desc:     document.getElementById('new-srv-desc').value,
+            }),
+        });
+        showToast('New service added!', 'success');
+        closeAddServiceModal();
+        e.target.reset();
+        await fetchAdminServices();
+    } catch (err) { showToast(`Failed: ${err.message}`, 'error'); }
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────
+function showToast(msg, type = 'info') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    const color = type === 'success' ? 'border-emerald-500 text-emerald-300' : type === 'error' ? 'border-roseGold-500 text-roseGold-300' : 'border-blue-500 text-blue-300';
+    toast.className = `glass-card p-3.5 rounded-xl border ${color} text-xs font-medium shadow-2xl flex items-center gap-2 transition-all duration-300`;
+    toast.innerHTML = `<i class="fa-solid fa-circle-info"></i> ${msg}`;
+    container.appendChild(toast);
+    setTimeout(() => { toast.classList.add('opacity-0'); setTimeout(() => toast.remove(), 300); }, 3500);
+}
+</script>
+</body>
+</html>
